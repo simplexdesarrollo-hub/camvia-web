@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+export const runtime = 'edge';
 import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import Particles from '../components/Particles';
