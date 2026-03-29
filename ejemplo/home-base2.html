@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="carbon">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAMVIA – Futuro 2026</title>
+  
+  <!-- Fuentes: Inter (Base) y Montserrat (Títulos de Planes y Secciones) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Íconos Phosphor para los Planes -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
+
+  <style>
+    /* ===================
+        1. VARIABLES Y BASE
+    =================== */
+    :root{
+      --bg:#0b0f12;                
+      --accent:#00ff7f;           
+      --accent-700:#00d06b;
+      --white:#e7f2ec;
+      --muted:#a7bfb2;
+      --radius:16px;
+      --btn-radius:10px;
+      --grid-alpha:.12;
+      --orb-a:.35;
+      --orb-b:.25;
+      --gold: #FFD700;
+      
+      /* 🚀 ESPACIO LATERAL FORZADO (Reducido 25%: de 238px a 178px) */
+      --side-space: 178px;
+    }
+
+    /* En pantallas muy pequeñas o laptops chicas, reducimos el margen para que no colapse */
+    @media (max-width: 1300px) {
+      :root { --side-space: 5vw; }
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      color:var(--white);
+      background:
+        radial-gradient(60vw 60vw at -10% -10%, rgba(0,255,127,.10), transparent 60%),
+        radial-gradient(60vw 60vw at 110% 110%, rgba(0,255,127,.10), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none; transition: color 0.3s ease;}
+    a:hover{color: var(--accent);}
+    
+    /* Contenedor principal con el muro de 238px a los lados */
+    .container {
+      max-width: 1920px; 
+      margin: 0 auto; 
+      padding: 24px var(--side-space);
+    }
+
+    /* ===================
+        2. EFECTOS DE FONDO (OPTIMIZADOS)
+    =================== */
+    .neon-grid-wrap {
+      position: fixed; inset: -40px; pointer-events: none; opacity: .30;
+      z-index: -3;
+    }
+    .neon-grid {
+      width: 100%; height: 100%;
+      background-image:
+        linear-gradient(rgba(0,255,127,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,127,.12) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 20s linear infinite;
+      will-change: transform;
+    }
+    @keyframes gridMove {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(40px, 40px, 0); }
+    }
+    
+    .orb{position:fixed;border-radius:999px;filter:blur(36px);pointer-events:none;z-index:-2;will-change:transform}
+    .orb.a{width:520px;height:520px;top:-160px;left:-160px;background:radial-gradient(circle at 30% 30%, rgba(0,255,127,var(--orb-a)), transparent 60%)}
+    .orb.b{width:520px;height:520px;bottom:-160px;right:-160px;background:radial-gradient(circle at 70% 70%, rgba(0,255,127,var(--orb-b)), transparent 60%)}
+    
+    .scanline{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;z-index:-1}
+    .scanline::before{
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06), transparent);
+      animation: scan 6s linear infinite;
+    }
+    @keyframes scan {
+      0% { transform: translate3d(0, -100%, 0); }
+      100% { transform: translate3d(0, 100%, 0); }
+    }
+    
+    #particles{position:fixed;inset:0;pointer-events:none;z-index:-1}
+    .particle{
+      position:absolute; border-radius:999px; background: var(--accent);
+      box-shadow: 0 0 8px rgba(0,255,127,.25);
+      opacity:.25; animation: float 10s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, -12px, 0); }
+    }
+
+    /* ===================
+        HEADER
+    =================== */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(8px);background:linear-gradient(180deg,rgba(0,0,0,.85),rgba(0,0,0,.55));border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav{display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800}
+    .logo{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);color:var(--bg);border-radius:50%;font-weight:900;box-shadow:0 0 14px rgba(0,255,127,.8)}
+    nav[aria-label="Principal"]{margin-left:auto;display:flex;align-items:center;gap:20px}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 18px;border-radius:var(--btn-radius);font-weight:700;border:1.5px solid rgba(255,255,255,.18);background:transparent;color:var(--white);transition:all .25s ease;line-height:1; cursor: pointer;}
+    .btn.accent{background:var(--accent);color:var(--bg);box-shadow:0 0 22px rgba(0,255,127,.55);border-color:transparent}
+    .btn.accent:hover{background:var(--accent-700);box-shadow:0 0 30px rgba(0,255,127,.75)}
+    .btn.ghost{border-color:rgba(255,255,255,.3)}
+    .btn.ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+    
+    .hamburger{display:none;margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 10px}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--white);margin:4px 0}
+
+    /* ===================
+        MEGA BANNER
+    =================== */
+    .mega-banner {
+      width: 100%;
+      min-height: 85vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; position: relative;
+      border-bottom: 1px solid rgba(0,255,127,0.1);
+      background: transparent;
+      padding: 40px var(--side-space);
+    }
+    
+    .giant-gift-wrapper {
+      position: relative; width: 220px; height: 220px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 30px;
+    }
+    .giant-gift {
+      font-size: 140px; filter: drop-shadow(0 0 50px rgba(0, 255, 127, 0.6));
+      animation: floatGift 4s ease-in-out infinite; z-index: 2;
+    }
+    .gift-glow {
+      position: absolute; width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 127, 0.25) 0%, transparent 70%);
+      filter: blur(50px); z-index: 1; animation: pulseGlow 4s ease-in-out infinite;
+    }
+    @keyframes floatGift { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+    @keyframes pulseGlow { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.1); } }
+
+    .banner-title {
+      font-size: clamp(42px, 6vw, 72px); line-height: 1.1; margin: 0 0 20px;
+      color: #fff; text-shadow: 0 0 30px rgba(0,255,127,0.4);
+      font-weight: 900;
+    }
+    .banner-subtitle { font-size: clamp(18px, 2vw, 24px); color: var(--muted); max-width: 700px; margin: 0 auto 40px; }
+    
+    .scroll-down { margin-top: auto; color: var(--accent); font-size: 14px; animation: bounce 2s infinite; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px; }
+    @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+    /* ===================
+        HERO SPLIT
+    =================== */
+    .hero-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; padding: 100px 0;
+    }
+    .hero-text h2 { 
+      font-size: clamp(36px, 4vw, 56px); line-height: 1.1; margin: 0 0 20px; 
+      font-weight: 900; color: #fff;
+    }
+    .hero-text h2 span { color: var(--accent); }
+    .hero-text p { color: var(--muted); font-size: 18px; margin-bottom: 30px; line-height: 1.6; }
+    
+    .date-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border: 1px solid #FFD700; border-radius: 99px;
+      color: #FFD700; font-weight: 700; font-size: 14px; margin-bottom: 24px;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .games-stack { display: flex; flex-direction: column; gap: 16px; position: relative; }
+    
+    .game-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px;
+      border-radius: 16px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease; cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    
+    .game-row.dados { border-left: 6px solid #ff9068; }
+    .game-row.bingo { border-left: 6px solid #4facfe; }
+    .game-row.sorteo { border-left: 6px solid #00ff7f; }
+
+    .gr-left { display: flex; align-items: center; gap: 20px; }
+    .gr-icon { font-size: 32px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+    .gr-text h3 { font-weight: 800; font-size: 18px; text-transform: uppercase; margin: 0 0 4px; color: #fff; }
+    .gr-text p { font-size: 14px; color: #888; margin: 0; }
+    
+    .gr-arrow { font-size: 20px; color: #555; transition: 0.3s; }
+    .game-row:hover .gr-arrow { color: #fff; transform: translateX(5px); }
+    .game-row:hover { background: #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+    .year-badge {
+      position: absolute; top: 10px; right: 10px;
+      font-size: 10px; font-weight: 800; color: #fff; opacity: 0.5;
+    }
+
+    .game-row.locked { opacity: 0.5; cursor: not-allowed; }
+    .game-row.locked:hover { transform: none; background: #111; }
+
+    /* ===================
+        PREMIOS (CARRUSEL OPTIMIZADO PARA MÓVILES)
+    =================== */
+    .section { padding-block: 40px; text-align: center; } 
+    .section h2 { margin-bottom: 20px; }
+    
+    .carousel { 
+      position: relative; 
+      margin-top: 20px; 
+      /* 🚀 ESTO ELIMINA EL CORTE: Rompemos el padding del contenedor para llegar hasta el borde de la pantalla */
+      margin-left: calc(-1 * var(--side-space));
+      margin-right: calc(-1 * var(--side-space));
+    }
+    .carousel .viewport { 
+      overflow-x: auto; 
+      overflow-y: hidden; 
+      scroll-snap-type: x mandatory; 
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch; 
+      scrollbar-width: none; 
+      padding-bottom: 20px;
+    }
+    .carousel .viewport::-webkit-scrollbar { display: none; }
+    
+    .carousel .track { 
+      display: flex; 
+      gap: 16px; 
+      /* El padding compensa el margen negativo para que las tarjetas inicien alineadas con el texto, pero resbalen al borde */
+      padding: 10px var(--side-space); 
+      width: max-content;
+      margin: 0;
+    }
+    
+    .prize {
+      min-width: 240px; max-width: 240px; background: linear-gradient(180deg,rgba(0,0,0,.78),rgba(0,0,0,.55));
+      border: 1px solid rgba(0,255,127,.22); border-radius: 18px; padding: 16px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.45), 0 0 18px rgba(0,255,127,.22); text-align: center;
+      transition: transform 0.3s ease;
+      scroll-snap-align: center;
+    }
+    @media (min-width: 768px) {
+      .prize { min-width: 260px; max-width: 260px; }
+    }
+    .prize:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .prize .thumb-lg { width: 100%; height: 140px; border-radius: 12px; background: linear-gradient(135deg, rgba(0,255,127,.2), rgba(0,0,0,.55)); display: grid; place-items: center; font-weight: 800; color: #dff7ec; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; }
+    .prize h3 { margin: 0 0 4px; font-size: 17px; min-height: 44px; display: flex; align-items: center; justify-content: center; color: #fff; }
+    .prize .date { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+    .prize button { width: 100%; padding: 8px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #aaa; border-radius: 8px; cursor: not-allowed; }
+    .arrow { position: absolute; top: 40%; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; z-index: 10; transition: 0.3s; font-size: 20px; }
+    .arrow:hover { background: var(--accent); color: var(--bg); border-color: transparent; }
+    
+    /* Reposicionamos las flechas porque ahora el contenedor es de borde a borde */
+    .arrow.prev { left: max(10px, calc(var(--side-space) - 22px)); } 
+    .arrow.next { right: max(10px, calc(var(--side-space) - 22px)); }
+
+    @media (max-width: 768px) {
+      .arrow { display: none; } /* En móvil se usa el deslizamiento nativo táctil (swipe) */
+    }
+
+    /* =========================================
+        BARRA DEL CONTADOR GENERAL
+       ========================================= */
+    .countdown-bar {
+      width: 100vw; background: #0b0f12;
+      border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);
+      margin: 60px 0; padding: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    /* Contenedor central (respeta el padding de tu diseño original) */
+    .countdown-inner { 
+      max-width: 1920px; 
+      margin: auto; 
+      padding: 0 var(--side-space); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 20px; 
+    }
+
+    /* =========================================
+        ESTILOS NUEVOS: HORIZONTAL TIMER (4x1)
+       ========================================= */
+    .htb-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+
+    .htb-icon {
+      font-size: clamp(32px, 4vw, 42px);
+      line-height: 1;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    }
+
+    .htb-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .htb-title {
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .htb-date {
+      font-size: clamp(12px, 1.5vw, 14px);
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    /* 4x1 Inquebrantable */
+    .htb-timers {
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap; /* Fuerza a que siempre estén en 1 fila */
+      flex-shrink: 0;
+    }
+
+    .htb-box {
+      background-color: #090b0d;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 75px;
+      padding: 14px 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .htb-box.active {
+      border: 1px solid var(--accent);
+      background-color: rgba(0, 255, 127, 0.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(0, 255, 127, 0.05);
+    }
+
+    .htb-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(24px, 3.5vw, 34px);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 4px;
+      letter-spacing: -1px;
+    }
+
+    .htb-box.active .htb-num {
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(0, 255, 127, 0.4);
+    }
+
+    .htb-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .htb-action {
+      flex-shrink: 0;
+    }
+
+    .htb-btn {
+      background: var(--accent);
+      color: #0b0f12;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 127, 0.2);
+      text-decoration: none;
+    }
+
+    .htb-btn:hover {
+      background: var(--accent-700);
+      box-shadow: 0 0 25px rgba(0, 255, 127, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Adaptación para móbiles del contador */
+    @media (max-width: 1024px) {
+      .countdown-inner {
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+      }
+      .htb-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      .htb-texts {
+        align-items: center;
+      }
+      .htb-timers {
+        width: 100%;
+        max-width: 400px;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .htb-box {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 2px;
+      }
+      .htb-action {
+        width: 100%;
+        max-width: 400px;
+      }
+      .htb-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* ===================
+        SECCIÓN PLANES NUEVOS (TROFEOS 3D)
+    =================== */
+    .font-title { font-family: 'Montserrat', sans-serif; }
+    
+    /* Contenedor principal de planes con muro */
+    .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 1920px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 60px var(--side-space); }
+
+    .pricing-container {
+        display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: stretch; width: 100%;
+    }
+    @media (min-width: 768px) { .pricing-container { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .pricing-container { grid-template-columns: repeat(4, 1fr); } }
+
+    .pricing-card {
+        background-color: #0d1117;
+        border-radius: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .pricing-card:hover { transform: translateY(-8px); z-index: 20; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); }
+
+    /* Colores por Nivel */
+    .tier-1 { --tier-color: #94a3b8; --tier-bg: rgba(148, 163, 184, 0.12); }
+    .tier-2 { --tier-color: #f59e0b; --tier-bg: rgba(245, 158, 11, 0.12); }
+    .tier-3 { --tier-color: #ec4899; --tier-bg: rgba(236, 72, 153, 0.12); }
+    .tier-max { --tier-color: #00ff66; --tier-bg: rgba(0, 255, 102, 0.15); }
+
+    .card-top {
+        padding: 2rem 1rem 1.5rem 1rem;
+        text-align: center;
+        background: radial-gradient(circle at top, var(--tier-bg) 0%, transparent 80%);
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+        display: flex; flex-direction: column; align-items: center;
+    }
+
+    .tier-max.pricing-card {
+        border: 1px solid rgba(0,255,102,0.3); box-shadow: 0 10px 30px -10px rgba(0,255,102,0.2);
+    }
+    .tier-max.pricing-card:hover {
+        transform: translateY(-8px); box-shadow: 0 15px 40px -5px rgba(0,255,102,0.3); border-color: rgba(0,255,102,0.6);
+    }
+
+    /* TROFEOS METÁLICOS 3D */
+    .badge-wrapper {
+        height: 85px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0.5rem 0 1.25rem 0;
+        position: relative;
+    }
+    .trophy-container { position: relative; width: 75px; height: 75px; display: flex; justify-content: center; align-items: center; }
+    .badge-icon { font-size: 2.2rem; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+
+    /* TIER 1 - PLATA */
+    .trophy-t1-outer { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 40%, #1e293b 100%); box-shadow: 0 8px 12px -4px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.8); }
+    .trophy-t1-inner { position: absolute; inset: 6px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #475569 0%, #0f172a 100%); box-shadow: inset 0 4px 8px rgba(0,0,0,0.8); }
+    .tier-1 .badge-icon { color: #f1f5f9; }
+
+    /* TIER 2 - ORO */
+    .trophy-t2-outer { position: absolute; width: 66px; height: 66px; border-radius: 12px; background: linear-gradient(135deg, #fef08a 0%, #eab308 40%, #78350f 100%); box-shadow: 8px 8px 12px -4px rgba(0,0,0,0.6), inset 2px 2px 5px rgba(255,255,255,0.8); transform: rotate(45deg); }
+    .trophy-t2-inner { position: absolute; width: 54px; height: 54px; border-radius: 10px; background: radial-gradient(circle at 30% 30%, #92400e 0%, #451a03 100%); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.8); transform: rotate(45deg); }
+    .tier-2 .badge-icon { color: #fde047; }
+
+    /* TIER 3 - RUBÍ */
+    .trophy-t3-outer { position: absolute; inset: 0; background: linear-gradient(135deg, #fbcfe8 0%, #db2777 40%, #4a044e 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); filter: drop-shadow(0 8px 8px rgba(0,0,0,0.5)); }
+    .trophy-t3-inner { position: absolute; inset: 5px; background: radial-gradient(circle at 30% 30%, #831843 0%, #4a044e 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); border: 2px solid #9d174d; }
+    .tier-3 .badge-icon { color: #fbcfe8; }
+
+    /* TIER MAX - NEÓN */
+    .trophy-t4-ring-1 { position: absolute; inset: 0; border-radius: 50%; border: 2px dashed rgba(0, 255, 102, 0.4); animation: spin 10s linear infinite; }
+    .trophy-t4-ring-2 { position: absolute; inset: 5px; border-radius: 50%; border: 2px solid transparent; border-left-color: #00ff66; border-right-color: #00ff66; animation: spin 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; box-shadow: 0 0 12px rgba(0,255,102,0.5); }
+    .trophy-t4-core { position: absolute; inset: 12px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #064e3b 0%, #022c22 100%); border: 2px solid #00ff66; box-shadow: 0 0 15px rgba(0,255,102,0.6), inset 0 0 12px rgba(0,255,102,0.4); }
+    
+    .t4-float { position: absolute; width: 10px; height: 10px; background: #00ff66; transform: rotate(45deg); box-shadow: 0 0 8px #00ff66; }
+    .t4-f1 { top: -5px; left: 50%; margin-left: -5px; }
+    .t4-f2 { bottom: -5px; left: 50%; margin-left: -5px; }
+    .t4-f3 { left: -5px; top: 50%; margin-top: -5px; }
+    .t4-f4 { right: -5px; top: 50%; margin-top: -5px; }
+
+    .tier-max .badge-icon { color: #ffffff; text-shadow: 0 0 10px #00ff66; }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* TEXTOS Y PRECIOS */
+    .plan-title { font-size: 1.05rem; font-weight: 900; color: #fff; letter-spacing: -0.2px; min-height: 2rem; display: flex; align-items: center; justify-content: center; white-space: nowrap; margin:0;}
+    @media (min-width: 1280px) { .plan-title { font-size: 1.15rem; letter-spacing: 0.2px; } }
+    .price-box { display: flex; justify-content: center; align-items: baseline; gap: 4px; margin-top: 0.25rem;}
+    .currency { font-size: 1.1rem; font-weight: 700; color: #64748b; margin-bottom: 4px;}
+    .price { font-size: 3rem; font-weight: 900; line-height: 1; letter-spacing: -1px; }
+    .tier-1 .price { color: #f8fafc; } .tier-2 .price { color: #fde047; } .tier-3 .price { color: #fbcfe8; } .tier-max .price { color: #00ff66; text-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+    .period-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tier-color); margin-top: 5px;}
+
+    /* CUERPO DE LA TARJETA (LISTA) */
+    .card-bottom { padding: 2rem 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .feature-list { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; margin-bottom: 1.5rem; }
+    .feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.3; text-align:left;}
+    .feature-icon { font-size: 1.15rem; color: var(--tier-color); flex-shrink: 0; margin-top: 1px;}
+
+    /* BOTONES PROFESIONALES */
+    .btn-action { width: 100%; padding: 14px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; transition: all 0.3s ease; margin-top: auto; cursor: pointer; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .btn-action:hover { background: rgba(0, 255, 102, 0.1); border-color: #00ff66; color: #00ff66; }
+    .tier-max .btn-action { background: #00ff66; color: #000; border-color: #00ff66; box-shadow: 0 5px 15px rgba(0, 255, 102, 0.2); }
+    .tier-max .btn-action:hover { background: #33ff85; border-color: #33ff85; color: #000; box-shadow: 0 6px 20px rgba(0, 255, 102, 0.4); transform: translateY(-2px); }
+
+
+    /* ===================
+        SECCIÓN: FAQ
+    =================== */
+    .faq-section { padding-block: 60px; text-align: center; position: relative; }
+    .faq-list { max-width: 900px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 255, 127, 0.15); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; text-align: left;}
+    .faq-item:hover { border-color: rgba(0, 255, 127, 0.4); background: rgba(0, 255, 127, 0.02); }
+    .faq-item summary { padding: 24px; color: var(--accent); font-weight: 700; font-size: 18px; cursor: pointer; list-style: none; display: flex; align-items: center; transition: color 0.3s;}
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::before { content: '▶'; margin-right: 15px; font-size: 14px; transition: transform 0.3s ease; }
+    .faq-item[open] summary::before { transform: rotate(90deg); }
+    .faq-content { padding: 0 24px 24px 53px; color: var(--muted); font-size: 15px; line-height: 1.6; animation: fadeIn 0.4s ease;}
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===================
+        BARRA DE CIERRE Y REDES
+    =================== */
+    .final-cta-bar { width: 100%; background: linear-gradient(90deg, rgba(0, 255, 127, 0.08) 0%, rgba(11, 15, 18, 0.95) 100%); backdrop-filter: blur(12px); border-top: 1px solid rgba(0, 255, 127, 0.2); border-bottom: 1px solid rgba(0, 255, 127, 0.2); padding: 30px 0; margin-top: 40px;}
+    
+    /* Footer CTA con muro */
+    .final-inner { max-width: 1920px; margin: 0 auto; padding: 0 var(--side-space); display: flex; justify-content: space-between; align-items: center; gap: 30px; }
+    .final-inner h2 { font-size: clamp(20px, 2.5vw, 26px); font-weight: 900; margin: 0; letter-spacing: -1px; color: var(--accent); text-shadow: 0 0 15px rgba(0, 255, 127, 0.3); }
+    .social-stack { display: flex; gap: 12px; align-items: center; }
+    .social-btn { width: 40px; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); display: grid; place-items: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: var(--muted);}
+    .social-btn:hover { background: rgba(0, 255, 127, 0.1); color: var(--accent); border-color: var(--accent); transform: translateY(-4px); }
+    .social-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* ===================
+        FOOTER INSTITUCIONAL
+    =================== */
+    .main-footer { background: #06080a; border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 0 30px; margin-top: 0;}
+    .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;}
+    .footer-col h3 { font-size: 14px; font-weight: 800; margin: 0 0 20px; color: #fff; text-transform: uppercase; letter-spacing: 1px;}
+    .footer-col .brand-footer { font-size: 24px; font-weight: 900; color: var(--accent); text-shadow: 0 0 10px rgba(0, 255, 127, 0.4); margin-bottom: 12px; display: block;}
+    .footer-col p { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0;}
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 12px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: .3s; }
+    .footer-links a:hover { color: var(--accent); transform: translateX(4px); display: inline-block; }
+    .bottom-bar { border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 20px;}
+
+    @media (max-width: 900px) {
+      .hero-split, .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-grid { gap: 40px; }
+      .nav, .final-inner { flex-direction: column; text-align: center; }
+      nav[aria-label="Principal"] { display: none; }
+      .social-stack { justify-content: center; margin-top: 10px; }
+      .faq-list { padding: 0 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ELEMENTOS DE FONDO (DISEÑO OPTIMIZADO) -->
+  <div class="neon-grid-wrap">
+    <div class="neon-grid"></div>
+  </div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <div id="particles" aria-hidden="true"></div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand"><div class="logo" aria-hidden="true">✓</div><span>CAMVIA</span></div>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+      <nav aria-label="Principal">
+        <a href="#inicio" class="btn ghost">Inicio</a>
+        <a href="#premios" class="btn ghost">Premios</a>
+        <a href="#planes" class="btn ghost">Planes</a>
+        <button class="btn accent">Lista de Espera</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 1. MEGA BANNER -->
+  <section class="mega-banner">
+    <div class="giant-gift-wrapper">
+      <div class="gift-glow"></div>
+      <div class="giant-gift">🎁</div>
+    </div>
+    <h1 class="banner-title">¡El regalo más grande<br>llega en 2026!</h1>
+    <p class="banner-subtitle">
+      Estamos preparando algo monumental. El sorteo oficial de Camvia comenzará en <strong>Agosto 2026</strong>. 
+      Aquí comienza tu lugar para ganar.
+    </p>
+    <button class="btn accent" style="padding: 16px 32px; font-size: 1.1rem;">Quiero ser parte</button>
+    <div class="scroll-down">↓ Desliza para ver más ↓</div>
+  </section>
+
+  <!-- 2. HERO SPLIT -->
+  <main class="container">
+    <section id="inicio" class="hero-split">
+      <div class="hero-text">
+        <div class="date-pill">📅 Agosto 2026: Lanzamiento Oficial</div>
+        <h2>Más que un sorteo, un <span>universo de premios</span></h2>
+        <p>Participa en DADOS, BINGO o Sorteo y gana muchos premios. Ser parte hoy es ganar. Regístrate y únete al juego..</p>
+        <button class="btn ghost">Registrarme ahora</button>
+      </div>
+
+      <div class="games-stack">
+        <div class="game-row dados">
+          <span class="year-badge">2026</span>
+          <div class="gr-left">
+            <div class="gr-icon">🎲</div>
+            <div class="gr-text"><h3>DADOS</h3><p>Compite en el ranking y gana premios según tu posición.</p></div>
+          </div>
+          <div class="gr-arrow">➜</div>
+        </div>
+
+        <div class="game-row bingo locked">
+          <span class="year-badge">2026</span>
+          <div class="gr-left">
+            <div class="gr-icon">🎱</div>
+            <div class="gr-text"><h3>BINGO</h3><p>Adquiere tu cartilla, juega en vivo y gana grandes premios.</p></div>
+          </div>
+          <div class="gr-arrow">🔒</div>
+        </div>
+
+        <div class="game-row sorteo locked">
+          <span class="year-badge">2026</span>
+          <div class="gr-left">
+            <div class="gr-icon">🎁</div>
+            <div class="gr-text"><h3>SORTEO</h3><p>Participa y gana premios grandes como iPhones, laptops, viajes y mas.</p></div>
+          </div>
+          <div class="gr-arrow">🔒</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 3. CARRUSEL PREMIOS -->
+  <section class="container section" id="premios">
+    <div class="text-center mb-12 mt-6 relative z-20 px-4">
+      <h2 class="font-title text-4xl sm:text-5xl font-black mb-4 text-white tracking-tight drop-shadow-lg">
+        Próximos <span class="text-[#00ff66]">Premios Confirmados</span>
+      </h2>
+    </div>
+    <div class="carousel" id="upcoming">
+      <div class="arrow prev">‹</div>
+      <div class="viewport">
+        <div class="track">
+          <!-- Premios principales -->
+          <article class="prize"><div class="thumb-lg">iPhone 17</div><h3>IPHONE 17 PRO MAX</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">PS5</div><h3>PLAYSTATION 5</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">Smart TV</div><h3>TV 65" 4K HDR</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">Samsung S26</div><h3>SAMSUNG S26 ULTRA</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">Lavadora</div><h3>LAVADORA MODERNA</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">S/ 1000</div><h3>GIFT CARD S/ 1000</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">MacBook</div><h3>MACBOOK AIR M3</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">Moto</div><h3>MOTO ELÉCTRICA 0KM</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">Set Gamer</div><h3>SET GAMER PRO 2026</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+          <article class="prize"><div class="thumb-lg">+ PREMIOS</div><h3>¡Y MUCHO MÁS!</h3><p class="date">Agosto 2026</p><button class="btn-sm">Pronto</button></article>
+        </div>
+      </div>
+      <div class="arrow next">›</div>
+    </div>
+  </section>
+
+  <!-- 4. CONTADOR BARRA ACTUALIZADO -->
+  <div class="countdown-bar">
+    <div class="countdown-inner">
+      <div class="htb-info">
+        <div class="htb-icon">🎲</div>
+        <div class="htb-texts">
+          <h3 class="htb-title">Otorgamos premios en:</h3>
+          <p class="htb-date">DOMINGO, 29 DE MARZO - 10:00 PM</p>
+        </div>
+      </div>
+      <div class="htb-timers">
+        <div class="htb-box">
+          <span class="htb-num" id="dDias">00</span>
+          <span class="htb-lbl">Días</span>
+        </div>
+        <div class="htb-box">
+          <span class="htb-num" id="dHoras">00</span>
+          <span class="htb-lbl">Horas</span>
+        </div>
+        <div class="htb-box">
+          <span class="htb-num" id="dMin">00</span>
+          <span class="htb-lbl">Min</span>
+        </div>
+        <div class="htb-box active">
+          <span class="htb-num" id="dSeg">00</span>
+          <span class="htb-lbl">Seg</span>
+        </div>
+      </div>
+      <div class="htb-action">
+        <button class="htb-btn">Participar ahora &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. SECCIÓN DE PLANES NUEVA (TROFEOS 3D) -->
+  <section id="planes" class="content-wrapper">
+    <div class="text-center mb-12 mt-6 z-20 relative px-4 flex flex-col items-center">
+        <div class="inline-flex items-center justify-center gap-2 mb-3 px-5 py-1.5 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/30">
+            <i class="ph-fill ph-sparkle text-[#00ff66] text-sm"></i>
+            <span class="text-[#00ff66] text-xs font-bold uppercase tracking-widest">Nuevos Beneficios</span>
+        </div>
+        <h2 class="font-title text-4xl sm:text-5xl font-black mb-2 mt-0 text-white tracking-tight drop-shadow-lg text-center">
+            Planes de <span class="text-[#00ff66]">Participación</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base font-medium max-w-2xl mx-auto leading-relaxed text-center mt-1">
+            Participando Más Tiempo Te Mantienes Más Cerca De Los Premios<br>
+            Tu plan comenzará oficialmente con el primer sorteo
+        </p>
+    </div>
+
+    <div class="w-full">
+        <div class="pricing-container">
+            <!-- TIER 1 -->
+            <div class="pricing-card tier-1">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-slate-300">Activa Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t1-outer"></div>
+                            <div class="trophy-t1-inner"></div>
+                            <i class="ph-fill ph-shield badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">10.00</span>
+                    </div>
+                    <span class="period-label">Mensual</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">30 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER 2 -->
+            <div class="pricing-card tier-2">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-amber-400">Mantén Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t2-outer"></div>
+                            <div class="trophy-t2-inner"></div>
+                            <i class="ph-fill ph-star badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">30.00</span>
+                    </div>
+                    <span class="period-label">Trimestral</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">90 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER 3 -->
+            <div class="pricing-card tier-3">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-pink-400">Potencia Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t3-outer"></div>
+                            <div class="trophy-t3-inner"></div>
+                            <i class="ph-fill ph-fire badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">60.00</span>
+                    </div>
+                    <span class="period-label">Semestral</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">180 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Extra Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER MAX -->
+            <div class="pricing-card tier-max">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-[#00ff66]">⭐ Vive Tu Suerte ⭐</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t4-ring-1"></div>
+                            <div class="trophy-t4-ring-2"></div>
+                            <div class="trophy-t4-core"></div>
+                            <div class="t4-float t4-f1"></div>
+                            <div class="t4-float t4-f2"></div>
+                            <div class="t4-float t4-f3"></div>
+                            <div class="t4-float t4-f4"></div>
+                            <i class="ph-fill ph-crown badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">80.00</span>
+                    </div>
+                    <span class="period-label text-[#00ff66]">Anual</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">360 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Doble Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action font-title">Suscribirme</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: FAQ -->
+  <section class="faq-section container">
+    <div class="text-center mb-12 mt-6 relative z-20 px-4">
+      <h2 class="font-title text-4xl sm:text-5xl font-black mb-4 text-white tracking-tight drop-shadow-lg">
+        Preguntas <span class="text-[#00ff66]">Frecuentes</span>
+      </h2>
+    </div>
+    
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Qué es CAMVIA?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>CAMVIA es una plataforma digital donde puedes jugar, participar y acceder a oportunidades reales de ganar premios.</span>
+          <span>Puedes participar y llevarte premios gratis a través de nuestros sistemas de Juegos y Bingo, o formar parte de sorteos exclusivos mediante suscripción, donde se concentran mayores premios.</span>
+          <span>CAMVIA está diseñada para todas las personas que buscan participar, disfrutar y tener la oportunidad de ganar bajo un sistema claro y transparente.</span>
+          <span>CAMVIA es tu lugar para ganar.</span>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo funciona DADOS?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>DADOS es un sistema basado en acumulación de puntos y ranking. Los participantes compiten para subir posiciones, y los premios se asignan según el puesto alcanzado al cierre oficial de cada jornada.</span>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué es el Golden Ticket?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>El Golden Ticket es la forma de participar en los sorteos de eventos especiales en CAMVIA.</span>
+          <span>Cada Golden Ticket equivale a una oportunidad dentro del sorteo del evento activo.</span>
+          <span>Puedes obtenerlos dentro de la plataforma o mediante negocios afiliados autorizados.</span>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué incluyen los planes de lanzamiento?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>Los planes de lanzamiento te permiten unirte antes del inicio oficial del sorteo y acceder a beneficios desde el momento de activación.</span>
+          <span>Al formar parte, obtienes:<br>
+          • <strong>Dados:</strong> Rango VIP <br>
+          • <strong>Bingo:</strong> 1 cartilla adicional <br>
+          • <strong>Regalos:</strong> Asignación del nivel de Socio Fundador</span>
+          <span>Tu membresía comenzará oficialmente con el primer sorteo programado.</span>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué es Socio Fundador?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>El Socio Fundador es un nivel de socio en CAMVIA exclusivo para quienes se suscriben en la etapa inicial de la plataforma.</span>
+          <span>Este nivel te brinda más oportunidades de ganar premios dentro de las dinámicas y sorteos, aumentando tus probabilidades frente a quienes se unan más adelante.</span>
+          <span>Ser parte desde el inicio te da una mayor ventaja a medida que la comunidad crece.</span>
+          <span>Próximamente se habilitarán nuevos niveles de socios.</span>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo funcionan las bonificaciones en DADOS?</summary>
+        <div class="faq-content flex flex-col gap-1">
+          <span>Los participantes pueden recoger diamantes en tres horarios diarios (6:00 AM, 12:00 PM y 5:00 PM). Cada diamante es un lanzamiento que suma puntos a tu score.</span>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="final-cta-bar">
+    <div class="final-inner">
+      <h2>Tu Lugar Para Ganar <span style="color: #ffffff; text-shadow: none;">Empieza Aquí</span></h2>
+      <div class="social-stack">
+        <a href="#" class="social-btn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="#" class="social-btn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        <a href="#" class="social-btn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+        <a href="#" class="social-btn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <span class="brand-footer">CAMVIA</span>
+          <p>Plataforma digital de juegos, dinámicas y sorteos diseñada para ofrecer oportunidades reales de ganar, con reglas claras y premios confirmados.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="#">Términos y Condiciones</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contacto</h3>
+          <ul class="footer-links">
+            <li>Lima, Perú</li>
+            <li>soporte@camvia.pe</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Comunidad</h3>
+          <ul class="footer-links">
+            <li><a href="#">Ganadores Oficiales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <small style="color: var(--muted)">© 2026 CAMVIA · Todos los derechos reservados</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- LÓGICA DE FONDO OPTIMIZADA ---
+    const particlesBox = document.getElementById('particles');
+    let particles = [];
+    
+    // Optimizamos la cantidad según el dispositivo
+    const isMobile = /Android|iPhone/i.test(navigator.userAgent);
+    const count = isMobile ? 15 : 36;
+
+    function makeParticles(n = count){
+      particlesBox.innerHTML = '';
+      particles = [];
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.className = 'particle';
+        const size = 6 + Math.random() * 12;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDuration = (8 + Math.random() * 10) + 's';
+        s.style.animationDelay = (Math.random() * 6) + 's';
+        s.style.opacity = (0.12 + Math.random() * 0.25).toFixed(2);
+        particles.push(s);
+        particlesBox.appendChild(s);
+      }
+    }
+    makeParticles();
+
+    // Parallax optimizado con translate3d
+    const orbA = document.querySelector('.orb.a');
+    const orbB = document.querySelector('.orb.b');
+    const lerp = (a,b,t) => a + (b-a)*t;
+    let mx=0, my=0, tx=0, ty=0;
+
+    window.addEventListener('mousemove', (e)=>{
+      mx = (e.clientX / window.innerWidth) * 2 - 1;
+      my = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    function loop(){
+      tx = lerp(tx, mx, 0.06);
+      ty = lerp(ty, my, 0.06);
+      if(orbA) orbA.style.transform = `translate3d(${tx * 12}px, ${ty * 12}px, 0)`;
+      if(orbB) orbB.style.transform = `translate3d(${-tx * 10}px, ${-ty * 10}px, 0)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // --- LÓGICA DE LA APP ---
+    const LAUNCH_DATE = new Date(2026, 2, 29, 22, 0, 0).getTime(); // Domingo 29 de Marzo 2026, 10:00 PM
+    const pad = n => String(n).padStart(2,'0');
+    (function tick(){
+      const d = Math.max(0, LAUNCH_DATE - Date.now());
+      const dias = Math.floor(d/8.64e7), horas = Math.floor((d%8.64e7)/3.6e6), minutos = Math.floor((d%3.6e6)/6e4), segundos = Math.floor((d%6e4)/1e3);
+      if(document.getElementById('dDias')) document.getElementById('dDias').textContent = pad(dias);
+      if(document.getElementById('dHoras')) document.getElementById('dHoras').textContent = pad(horas);
+      if(document.getElementById('dMin')) document.getElementById('dMin').textContent = pad(minutos);
+      if(document.getElementById('dSeg')) document.getElementById('dSeg').textContent = pad(segundos);
+      if(d>0) requestAnimationFrame(tick);
+    })();
+
+    const viewport = document.querySelector('.viewport');
+    document.querySelector('.prev').onclick = () => viewport.scrollBy({left:-280, behavior:'smooth'});
+    document.querySelector('.next').onclick = () => viewport.scrollBy({left:280, behavior:'smooth'});
+  </script>
+
+</body>
+</html>

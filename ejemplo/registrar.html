@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camvia • Regístrate</title>
+  <meta name="color-scheme" content="dark">
+  <style>
+    /* --- VARIABLES & DESIGN TOKENS --- */
+    :root {
+      --cam: #00ff7f;
+      --cam-glow: rgba(0, 255, 127, 0.4);
+      --cam-dark: #00b25e;
+      --carbon-bg: #0b0f12; /* Restablecido al original */
+      --panel-bg: rgba(13, 19, 24, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-dim: #9fb2ac;
+      --error: #ff5f5f;
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* --- RESET & BASE --- */
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      /* FONDO RESTABLECIDO AL ORIGINAL */
+      background:
+        radial-gradient(60vw 60vw at -10% -10%, rgba(0,255,127,.10), transparent 60%),
+        radial-gradient(60vw 60vw at 110% 110%, rgba(0,255,127,.10), transparent 60%),
+        var(--carbon-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    /* --- ANIMATED BACKGROUND --- */
+    .bg-elements { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    
+    .neon-grid {
+      position: absolute; inset: 0; opacity: 0.12;
+      background-image: 
+        linear-gradient(rgba(0,255,127,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,127,.12) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    .scanline { position: fixed; inset: 0; pointer-events:none; mix-blend-mode: screen; z-index: 10; }
+    .scanline::before {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06), transparent);
+      animation: scan 6s linear infinite;
+    }
+    @keyframes scan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    /* --- LAYOUT COMPONENTS --- */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* --- HEADER --- */
+    .card-header {
+      padding: 32px 32px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .brand-logo {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--cam), var(--cam-dark));
+      border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #000; font-size: 24px;
+      box-shadow: 0 10px 25px var(--cam-glow);
+      flex-shrink: 0;
+    }
+
+    .header-info h1 {
+      margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em;
+    }
+
+    .header-info p {
+      margin: 4px 0 0; color: var(--text-dim); font-size: 15px;
+    }
+
+    .shine {
+      position: absolute; inset:0; pointer-events:none; overflow:hidden;
+    }
+    .shine::before{
+      content:""; position:absolute; top:-50%; left:0; width:33%; height:200%;
+      transform: rotate(45deg) translateX(-120%);
+      background: rgba(255,255,255,.05);
+      animation: sweep 2.8s ease-in-out infinite;
+    }
+    @keyframes sweep {
+      0% { transform: rotate(45deg) translateX(-120%); }
+      100% { transform: rotate(45deg) translateX(220%); }
+    }
+
+    /* --- FORM STYLES --- */
+    .card-body { padding: 0 32px 32px; }
+
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .card-header { flex-direction: column; text-align: center; }
+    }
+
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    
+    .input-group label {
+      font-size: 13px; font-weight: 600; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    .input-wrapper {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      transition: var(--transition);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--cam);
+      box-shadow: 0 0 0 4px rgba(0, 255, 127, 0.1);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .input-wrapper svg {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: var(--text-dim);
+      transition: var(--transition);
+    }
+
+    .input-wrapper:focus-within svg { color: var(--cam); }
+
+    .input-field {
+      width: 100%; background: transparent; border: none;
+      padding: 14px 14px 14px 44px; color: white; outline: none;
+      font-size: 15px; font-family: inherit;
+    }
+
+    /* validation states */
+    .input-group.error .input-wrapper { border-color: var(--error); }
+    .input-group.error .error-msg { 
+      color: var(--error); font-size: 11px; margin-top: 4px; font-weight: 500;
+    }
+
+    /* --- BUTTONS & ACTIONS --- */
+    .checkbox-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin: 10px 0 24px; cursor: pointer;
+    }
+
+    .checkbox-row input {
+      width: 18px; height: 18px; accent-color: var(--cam);
+      margin-top: 2px; flex-shrink: 0;
+    }
+
+    .checkbox-row label { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+    .checkbox-row a { color: var(--cam); text-decoration: none; font-weight: 600; }
+
+    .btn-submit {
+      width: 100%; padding: 18px; border: none; border-radius: 14px;
+      background: linear-gradient(to right, var(--cam), var(--cam-dark));
+      color: #000; font-weight: 800; font-size: 16px;
+      cursor: pointer; transition: var(--transition);
+      box-shadow: 0 15px 35px rgba(0, 255, 127, 0.25);
+      position: relative; overflow: hidden;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 45px rgba(0, 255, 127, 0.35);
+    }
+
+    /* --- TOAST NOTIFICATION --- */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #151b21; border: 1px solid var(--cam);
+      padding: 16px 28px; border-radius: 99px; z-index: 1000;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .toast.visible { transform: translateX(-50%) translateY(0); }
+    .toast.error { border-color: var(--error); }
+
+    .particle {
+      position: fixed; background: var(--cam); border-radius: 50%; 
+      pointer-events: none; opacity: 0.2; z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <div class="bg-elements">
+    <div class="neon-grid"></div>
+    <div class="scanline"></div>
+  </div>
+
+  <div class="container">
+    <main class="card">
+      <header class="card-header">
+        <div class="brand-logo">C</div>
+        <div class="header-info">
+          <h1>Regístrate</h1>
+          <p>Únete hoy y participa por múltiples premios en un solo lugar. Planes desde <b>S/ 9/mes</b>.</p>
+        </div>
+        <div class="shine"></div>
+      </header>
+
+      <section class="card-body">
+        <form id="regForm" novalidate>
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Nombres</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" name="name" class="input-field" placeholder="Ej. Juan" required>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Apellidos</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <input type="text" name="lastname" class="input-field" placeholder="Ej. Pérez" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Fecha de Nacimiento</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <input type="date" name="dob" class="input-field" required>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Correo</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" name="email" class="input-field" placeholder="juan@camvia.com" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Contraseña</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" name="pass" class="input-field" placeholder="••••••••" required>
+              </div>
+            </div>
+            <div class="input-group" id="confirmPassGroup">
+              <label>Repetir Contraseña</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <input type="password" name="passConfirm" class="input-field" placeholder="••••••••" required>
+              </div>
+              <div class="error-msg"></div>
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">
+              Confirmo que he leído y acepto los <a href="#">términos de servicio</a> y la <a href="#">privacidad de datos</a>.
+            </label>
+          </div>
+
+          <button type="submit" class="btn-submit">Sincronizar mi cuenta</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-dim);">
+          ¿Ya eres parte? <a href="#" style="color: var(--cam); font-weight: 700;">Identifícate aquí</a>
+        </p>
+      </section>
+
+      <footer style="padding: 0 32px 32px; text-align: center; font-size: 11px; color: #556660; text-transform: uppercase; letter-spacing: 0.1em;">
+        Sistemas encriptados © Camvia Tech Industries 2024
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast">
+    <span id="toast-icon">✓</span>
+    <span id="toast-text">Acción completada</span>
+  </div>
+
+  <script>
+    // --- PARTICLES ENGINE ---
+    function createParticles() {
+      const container = document.body;
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 6 + 4;
+        p.style.width = `${size}px`;
+        p.style.height = `${size}px`;
+        p.style.left = `${Math.random() * 100}vw`;
+        p.style.top = `${Math.random() * 100}vh`;
+        container.appendChild(p);
+
+        const duration = Math.random() * 10 + 10;
+        p.animate([
+          { transform: 'translate(0, 0)', opacity: 0.2 },
+          { transform: `translate(${Math.random() * 60 - 30}px, ${Math.random() * -80}px)`, opacity: 0 },
+        ], {
+          duration: duration * 1000,
+          iterations: Infinity
+        });
+      }
+    }
+
+    // --- NOTIFICATIONS ---
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toast-text');
+    const toastIcon = document.getElementById('toast-icon');
+
+    function notify(msg, isError = false) {
+      toastText.textContent = msg;
+      toastIcon.textContent = isError ? '✕' : '✓';
+      toast.classList.toggle('error', isError);
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 4000);
+    }
+
+    // --- VALIDATION LOGIC ---
+    const form = document.getElementById('regForm');
+    const confirmGroup = document.getElementById('confirmPassGroup');
+    const confirmError = confirmGroup.querySelector('.error-msg');
+
+    function validatePasswords() {
+      const p1 = form.pass.value;
+      const p2 = form.passConfirm.value;
+
+      if (p1 !== p2 && p2 !== "") {
+        confirmGroup.classList.add('error');
+        confirmError.textContent = "Las contraseñas no coinciden.";
+        return false;
+      } else if (p1.length < 8 && p1 !== "") {
+        confirmGroup.classList.add('error');
+        confirmError.textContent = "Mínimo 8 caracteres.";
+        return false;
+      } else {
+        confirmGroup.classList.remove('error');
+        confirmError.textContent = "";
+        return true;
+      }
+    }
+
+    form.pass.addEventListener('input', validatePasswords);
+    form.passConfirm.addEventListener('input', validatePasswords);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const isPassValid = validatePasswords();
+      const terms = document.getElementById('terms').checked;
+
+      if (!isPassValid) {
+        notify("Revisa los errores en la contraseña", true);
+        return;
+      }
+
+      if (!terms) {
+        notify("Debes aceptar los términos", true);
+        return;
+      }
+
+      if (form.checkValidity()) {
+        notify("¡Registro exitoso! Iniciando sesión...");
+        const btn = form.querySelector('.btn-submit');
+        const originalText = btn.textContent;
+        btn.textContent = "PROCESANDO...";
+        btn.disabled = true;
+        
+        setTimeout(() => {
+          form.reset();
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 3000);
+      } else {
+        notify("Completa todos los campos obligatorios", true);
+      }
+    });
+
+    window.onload = createParticles;
+  </script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="carbon">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planes - Originales Aislados</title>
+  
+  <!-- Fuentes: Inter (Base) y Montserrat (Títulos de Planes y Secciones) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Íconos Phosphor para los Planes -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- Lucide Icons para los iconos de regalos en la tabla -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
+
+  <style>
+    /* ===================
+        1. VARIABLES Y BASE (ORIGINALES)
+    =================== */
+    :root{
+      --bg:#0b0f12;                
+      --accent:#00ff7f;           
+      --accent-700:#00d06b;
+      --white:#e7f2ec;
+      --muted:#a7bfb2;
+      --radius:16px;
+      --btn-radius:10px;
+      --grid-alpha:.12;
+      --orb-a:.35;
+      --orb-b:.25;
+      --gold: #FFD700;
+      
+      /* ESPACIO LATERAL FORZADO DE TU ARCHIVO ORIGINAL */
+      --side-space: 178px;
+
+      /* Variables estrictamente necesarias para la tabla de curiosidad */
+      --panel: rgba(18, 23, 28, 0.82);
+      --border: rgba(255, 255, 255, 0.08);
+      --tier-base: #00a982;     
+      --tier-mediano: #007e00;  
+      --tier-grande: #2db900;   
+      --tier-estelar: #00ff00;  
+      --tier-ultimate: #ff00ff; 
+    }
+
+    @media (max-width: 1300px) {
+      :root { --side-space: 5vw; }
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      color:var(--white);
+      background:
+        radial-gradient(60vw 60vw at -10% -10%, rgba(0,255,127,.10), transparent 60%),
+        radial-gradient(60vw 60vw at 110% 110%, rgba(0,255,127,.10), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      
+      /* CORRECCIÓN: Quitamos el flex y el center para que el scroll fluya natural hacia abajo */
+      min-height: 100vh;
+      padding-top: 40px; /* Le damos un poco de espacio libre arriba para que respire el título */
+    }
+
+    /* ===================
+        2. EFECTOS DE FONDO (OPTIMIZADOS)
+    =================== */
+    .neon-grid-wrap { position: fixed; inset: -40px; pointer-events: none; opacity: .30; z-index: -3; }
+    .neon-grid { width: 100%; height: 100%; background-image: linear-gradient(rgba(0,255,127,var(--grid-alpha)) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,127,var(--grid-alpha)) 1px, transparent 1px); background-size: 40px 40px; animation: gridMove 20s linear infinite; will-change: transform; }
+    @keyframes gridMove { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(40px, 40px, 0); } }
+    
+    .orb{position:fixed;border-radius:999px;filter:blur(36px);pointer-events:none;z-index:-2; will-change: transform;}
+    .orb.a{width:520px;height:520px;top:-160px;left:-160px;background:radial-gradient(circle at 30% 30%, rgba(0,255,127,var(--orb-a)), transparent 60%)}
+    .orb.b{width:520px;height:520px;bottom:-160px;right:-160px;background:radial-gradient(circle at 70% 70%, rgba(0,255,127,var(--orb-b)), transparent 60%)}
+    
+    .scanline{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;z-index:-1}
+    .scanline::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom, transparent, rgba(255,255,255,.06), transparent);animation:scan 6s linear infinite}
+    @keyframes scan{0%{transform:translate3d(0, -100%, 0)}100%{transform:translate3d(0, 100%, 0)}}
+    
+    #particles{position:fixed;inset:0;pointer-events:none;z-index:-1}
+    .particle{position:absolute;border-radius:999px;background:var(--accent);filter:drop-shadow(0 0 8px rgba(0,255,127,.25));animation:float 10s ease-in-out infinite; will-change: transform;}
+    @keyframes float { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -12px, 0); } }
+
+    /* ===================
+        SECCIÓN PLANES NUEVOS (TROFEOS 3D) - EXACTAMENTE TU CÓDIGO
+    =================== */
+    .font-title { font-family: 'Montserrat', sans-serif; }
+    
+    /* Contenedor principal de planes con muro */
+    .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 1920px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 60px var(--side-space); }
+
+    .pricing-container {
+        display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: stretch; width: 100%;
+    }
+    @media (min-width: 768px) { .pricing-container { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .pricing-container { grid-template-columns: repeat(4, 1fr); } }
+
+    .pricing-card {
+        background-color: #0d1117;
+        border-radius: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .pricing-card:hover { transform: translateY(-8px); z-index: 20; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); }
+
+    /* Colores por Nivel */
+    .tier-1 { --tier-color: #94a3b8; --tier-bg: rgba(148, 163, 184, 0.12); }
+    .tier-2 { --tier-color: #f59e0b; --tier-bg: rgba(245, 158, 11, 0.12); }
+    .tier-3 { --tier-color: #ec4899; --tier-bg: rgba(236, 72, 153, 0.12); }
+    .tier-max { --tier-color: #00ff66; --tier-bg: rgba(0, 255, 102, 0.15); }
+
+    .card-top {
+        padding: 2rem 1rem 1.5rem 1rem;
+        text-align: center;
+        background: radial-gradient(circle at top, var(--tier-bg) 0%, transparent 80%);
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+        display: flex; flex-direction: column; align-items: center;
+    }
+
+    .tier-max.pricing-card {
+        border: 1px solid rgba(0,255,102,0.3); box-shadow: 0 10px 30px -10px rgba(0,255,102,0.2);
+    }
+    .tier-max.pricing-card:hover {
+        transform: translateY(-8px); box-shadow: 0 15px 40px -5px rgba(0,255,102,0.3); border-color: rgba(0,255,102,0.6);
+    }
+
+    /* TROFEOS METÁLICOS 3D */
+    .badge-wrapper {
+        height: 85px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0.5rem 0 1.25rem 0;
+        position: relative;
+    }
+    .trophy-container { position: relative; width: 75px; height: 75px; display: flex; justify-content: center; align-items: center; }
+    .badge-icon { font-size: 2.2rem; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+
+    /* TIER 1 - PLATA */
+    .trophy-t1-outer { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 40%, #1e293b 100%); box-shadow: 0 8px 12px -4px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.8); }
+    .trophy-t1-inner { position: absolute; inset: 6px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #475569 0%, #0f172a 100%); box-shadow: inset 0 4px 8px rgba(0,0,0,0.8); }
+    .tier-1 .badge-icon { color: #f1f5f9; }
+
+    /* TIER 2 - ORO */
+    .trophy-t2-outer { position: absolute; width: 66px; height: 66px; border-radius: 12px; background: linear-gradient(135deg, #fef08a 0%, #eab308 40%, #78350f 100%); box-shadow: 8px 8px 12px -4px rgba(0,0,0,0.6), inset 2px 2px 5px rgba(255,255,255,0.8); transform: rotate(45deg); }
+    .trophy-t2-inner { position: absolute; width: 54px; height: 54px; border-radius: 10px; background: radial-gradient(circle at 30% 30%, #92400e 0%, #451a03 100%); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.8); transform: rotate(45deg); }
+    .tier-2 .badge-icon { color: #fde047; }
+
+    /* TIER 3 - RUBÍ */
+    .trophy-t3-outer { position: absolute; inset: 0; background: linear-gradient(135deg, #fbcfe8 0%, #db2777 40%, #4a044e 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); filter: drop-shadow(0 8px 8px rgba(0,0,0,0.5)); }
+    .trophy-t3-inner { position: absolute; inset: 5px; background: radial-gradient(circle at 30% 30%, #831843 0%, #4a044e 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); border: 2px solid #9d174d; }
+    .tier-3 .badge-icon { color: #fbcfe8; }
+
+    /* TIER MAX - NEÓN */
+    .trophy-t4-ring-1 { position: absolute; inset: 0; border-radius: 50%; border: 2px dashed rgba(0, 255, 102, 0.4); animation: spin 10s linear infinite; }
+    .trophy-t4-ring-2 { position: absolute; inset: 5px; border-radius: 50%; border: 2px solid transparent; border-left-color: #00ff66; border-right-color: #00ff66; animation: spin 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; box-shadow: 0 0 12px rgba(0,255,102,0.5); }
+    .trophy-t4-core { position: absolute; inset: 12px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #064e3b 0%, #022c22 100%); border: 2px solid #00ff66; box-shadow: 0 0 15px rgba(0,255,102,0.6), inset 0 0 12px rgba(0,255,102,0.4); }
+    
+    .t4-float { position: absolute; width: 10px; height: 10px; background: #00ff66; transform: rotate(45deg); box-shadow: 0 0 8px #00ff66; }
+    .t4-f1 { top: -5px; left: 50%; margin-left: -5px; }
+    .t4-f2 { bottom: -5px; left: 50%; margin-left: -5px; }
+    .t4-f3 { left: -5px; top: 50%; margin-top: -5px; }
+    .t4-f4 { right: -5px; top: 50%; margin-top: -5px; }
+
+    .tier-max .badge-icon { color: #ffffff; text-shadow: 0 0 10px #00ff66; }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* TEXTOS Y PRECIOS */
+    .plan-title { font-size: 1.05rem; font-weight: 900; color: #fff; letter-spacing: -0.2px; min-height: 2rem; display: flex; align-items: center; justify-content: center; white-space: nowrap; margin:0;}
+    @media (min-width: 1280px) { .plan-title { font-size: 1.15rem; letter-spacing: 0.2px; } }
+    .price-box { display: flex; justify-content: center; align-items: baseline; gap: 4px; margin-top: 0.25rem;}
+    .currency { font-size: 1.1rem; font-weight: 700; color: #64748b; margin-bottom: 4px;}
+    .price { font-size: 3rem; font-weight: 900; line-height: 1; letter-spacing: -1px; }
+    .tier-1 .price { color: #f8fafc; } .tier-2 .price { color: #fde047; } .tier-3 .price { color: #fbcfe8; } .tier-max .price { color: #00ff66; text-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+    .period-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tier-color); margin-top: 5px;}
+
+    /* CUERPO DE LA TARJETA (LISTA) */
+    .card-bottom { padding: 2rem 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .feature-list { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; margin-bottom: 1.5rem; }
+    .feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.3; text-align:left;}
+    .feature-icon { font-size: 1.15rem; color: var(--tier-color); flex-shrink: 0; margin-top: 1px;}
+
+    /* BOTONES PROFESIONALES */
+    .btn-action { width: 100%; padding: 14px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; transition: all 0.3s ease; margin-top: auto; cursor: pointer; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .btn-action:hover { background: rgba(0, 255, 102, 0.1); border-color: #00ff66; color: #00ff66; }
+    .tier-max .btn-action { background: #00ff66; color: #000; border-color: #00ff66; box-shadow: 0 5px 15px rgba(0, 255, 102, 0.2); }
+    .tier-max .btn-action:hover { background: #33ff85; border-color: #33ff85; color: #000; box-shadow: 0 6px 20px rgba(0, 255, 102, 0.4); transform: translateY(-2px); }
+    
+    /* ===================
+        ESTILOS TABLA SECRETA (ORIGINALES DEL USUARIO)
+    =================== */
+    .table-wrapper {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .table-wrapper.expanded {
+        max-height: 2000px;
+        opacity: 1;
+        margin-top: 2rem;
+    }
+
+    /* --- ESTILOS DE LA TABLA --- */
+    .table-container { 
+      background: var(--panel); 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      overflow: hidden; 
+      width: 100%; 
+      max-width: 950px;
+      backdrop-filter: blur(12px); 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      margin: 0 auto;
+    }
+
+    .premios-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      min-width: 800px; 
+    }
+
+    .premios-table th { 
+      padding: 18px 8px; 
+      background: rgba(255, 255, 255, 0.02); 
+      border-bottom: 2px solid var(--border); 
+      text-align: center; 
+    }
+    
+    .premios-table th:first-child { 
+      text-align: left; 
+      padding-left: 30px; 
+    }
+
+    .premios-table td { 
+      padding: 14px 8px; 
+      border-bottom: 1px solid var(--border); 
+      text-align: center; 
+      font-size: 15px; 
+      font-weight: 700; 
+      color: #e7f2ec; 
+      transition: background 0.2s;
+    }
+    
+    .premios-table tbody tr:hover:not(.active-row) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .col-level { 
+      text-align: left !important; 
+      padding-left: 30px !important; 
+      color: #8b949e; 
+      font-size: 13px; 
+      text-transform: uppercase; 
+      font-weight: 800; 
+      letter-spacing: 1px; 
+    }
+
+    .total-badge { 
+      font-weight: 900; 
+      color: #00ff00; 
+      background: rgba(0, 255, 0, 0.08); 
+      padding: 5px 12px; 
+      border-radius: 6px; 
+      font-size: 16px; 
+    }
+
+    .ultimate-pill { 
+      background: var(--tier-ultimate); 
+      color: #fff; 
+      padding: 3px 10px; 
+      border-radius: 6px; 
+      font-weight: 900; 
+      font-size: 11px; 
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.4); 
+    }
+
+    /* Scrollbar personalizado para overflow */
+    .overflow-x-auto::-webkit-scrollbar {
+      height: 6px;
+    }
+    .overflow-x-auto::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.02);
+    }
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ELEMENTOS DE FONDO ORIGINALES (OPTIMIZADOS) -->
+  <div class="neon-grid-wrap" aria-hidden="true">
+    <div class="neon-grid"></div>
+  </div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <div id="particles" aria-hidden="true"></div>
+
+  <!-- 5. SECCIÓN DE PLANES NUEVA (TROFEOS 3D) -->
+  <!-- ESTE BLOQUE ES EXACTAMENTE EL MISMO DE TU ARCHIVO "INICIO NO SE.html" -->
+  <section id="planes" class="content-wrapper">
+    
+    <!-- Encabezado de la Sección -->
+    <div class="text-center mb-12 mt-6 z-20 relative px-4 flex flex-col items-center">
+        <div class="inline-flex items-center justify-center gap-2 mb-3 px-5 py-1.5 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/30">
+            <i class="ph-fill ph-sparkle text-[#00ff66] text-sm"></i>
+            <span class="text-[#00ff66] text-xs font-bold uppercase tracking-widest">
+                Nuevos Beneficios
+            </span>
+        </div>
+        <h2 class="font-title text-4xl sm:text-5xl font-black mb-2 mt-0 text-white tracking-tight drop-shadow-lg text-center">
+            Planes de <span class="text-[#00ff66]">Participación</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base font-medium max-w-2xl mx-auto leading-relaxed text-center mt-1">
+            Participando Más Tiempo Te Mantienes Más Cerca De Los Premios<br>
+            Tu plan comenzará oficialmente con el primer sorteo
+        </p>
+    </div>
+
+    <!-- Contenedor Tarjetas de Precios -->
+    <div class="w-full">
+        <div class="pricing-container">
+
+            <!-- TIER 1: ACTIVA TU SUERTE -->
+            <div class="pricing-card tier-1">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-slate-300">Activa Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t1-outer"></div>
+                            <div class="trophy-t1-inner"></div>
+                            <i class="ph-fill ph-shield badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">10.00</span>
+                    </div>
+                    <span class="period-label">Mensual</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">30 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER 2: MANTÉN TU SUERTE -->
+            <div class="pricing-card tier-2">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-amber-400">Mantén Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t2-outer"></div>
+                            <div class="trophy-t2-inner"></div>
+                            <i class="ph-fill ph-star badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">30.00</span>
+                    </div>
+                    <span class="period-label">Trimestral</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">90 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER 3: POTENCIA TU SUERTE -->
+            <div class="pricing-card tier-3">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-pink-400">Potencia Tu Suerte</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t3-outer"></div>
+                            <div class="trophy-t3-inner"></div>
+                            <i class="ph-fill ph-fire badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">60.00</span>
+                    </div>
+                    <span class="period-label">Semestral</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">180 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Extra Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action">Suscribirme</button>
+                </div>
+            </div>
+
+            <!-- TIER MAX: VIVE TU SUERTE -->
+            <div class="pricing-card tier-max">
+                <div class="card-top">
+                    <h2 class="plan-title font-title text-[#00ff66]">⭐ Vive Tu Suerte ⭐</h2>
+                    <div class="badge-wrapper">
+                        <div class="trophy-container">
+                            <div class="trophy-t4-ring-1"></div>
+                            <div class="trophy-t4-ring-2"></div>
+                            <div class="trophy-t4-core"></div>
+                            <div class="t4-float t4-f1"></div>
+                            <div class="t4-float t4-f2"></div>
+                            <div class="t4-float t4-f3"></div>
+                            <div class="t4-float t4-f4"></div>
+                            <i class="ph-fill ph-crown badge-icon"></i>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <span class="currency">S/</span><span class="price font-title">80.00</span>
+                    </div>
+                    <span class="period-label text-[#00ff66]">Anual</span>
+                </div>
+                <div class="card-bottom">
+                    <div class="feature-list">
+                        <div class="feature-item"><i class="ph-fill ph-gift feature-icon"></i><span>Participas en <strong class="text-white">360 Premios</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-lightning feature-icon"></i><span>Beneficios en <strong class="text-white">Dados, Bingo y Regalos</strong></span></div>
+                        <div class="feature-item"><i class="ph-fill ph-coins feature-icon"></i><span>Doble Bonificación de <strong class="text-white">Puntos Camvia</strong></span></div>
+                    </div>
+                    <button class="btn-action font-title">Suscribirme</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- ==========================================
+         SECCIÓN SECRETA DE TABLA (Solo curiosos) 
+         ========================================== -->
+    <div class="mt-16 w-full flex flex-col items-center relative z-20">
+        <!-- Botón Toggle -->
+        <button id="toggleTableBtn" class="group flex items-center gap-3 px-7 py-3.5 rounded-full bg-[#12161b] border border-white/10 hover:border-[#00ff66]/50 hover:bg-[#1a2027] transition-all text-gray-400 hover:text-white font-title text-sm tracking-wide shadow-[0_5px_15px_rgba(0,0,0,0.5)] cursor-pointer">
+            <i class="ph-fill ph-eye text-xl text-[#00ff66] opacity-70 group-hover:opacity-100 group-hover:drop-shadow-[0_0_8px_#00ff66] transition-all"></i>
+            <span id="toggleTableText">Curiosidad sobre la distribución de premios</span>
+            <i class="ph-bold ph-caret-down text-sm transition-transform duration-500" id="tableCaret"></i>
+        </button>
+
+        <!-- Contenedor Desplegable con tu tabla ORIGINAL -->
+        <div id="tableContainer" class="table-wrapper w-full flex flex-col items-center">
+            
+            <!-- TÍTULO Y SUBTÍTULO (Arriba de la tabla) -->
+            <div class="mb-8 mt-4 text-center max-w-[800px] px-4">
+                <h3 class="font-title text-3xl sm:text-5xl font-black text-white mb-3 tracking-tight drop-shadow-lg">
+                    Los premios <span class="text-[#00ff66]">no se detienen</span>
+                </h3>
+                <h4 class="font-title text-[13px] sm:text-[14px] font-bold text-gray-300 uppercase tracking-widest opacity-90">
+                    Cada nivel suma nuevas oportunidades de ganar.
+                </h4>
+            </div>
+
+            <!-- CÓDIGO DE TABLA DEL USUARIO -->
+            <div class="table-container">
+              <div class="overflow-x-auto">
+                <table class="premios-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="text-left"><span class="text-white text-[11px] font-black">NIVEL DE PREMIOS</span></div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center">
+                          <span class="text-[#00ff00] text-[10px] font-black">TOTAL</span>
+                          <span class="text-[#00ff00] text-[8px]">BOLSA</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center" style="color:var(--tier-base)">
+                          <i data-lucide="gift" class="w-5 h-5 mb-1"></i>
+                          <span class="text-[9px] font-black uppercase">Base</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center" style="color:var(--tier-mediano)">
+                          <i data-lucide="gift" class="w-5 h-5 mb-1"></i>
+                          <span class="text-[9px] font-black uppercase">Mediano</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center" style="color:var(--tier-grande)">
+                          <i data-lucide="gift" class="w-5 h-5 mb-1"></i>
+                          <span class="text-[9px] font-black uppercase">Grande</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center" style="color:var(--tier-estelar)">
+                          <i data-lucide="gift" class="w-5 h-5 mb-1"></i>
+                          <span class="text-[9px] font-black uppercase">Estelar</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex flex-col items-center" style="color:var(--tier-ultimate)">
+                          <i data-lucide="gift" class="w-5 h-5 mb-1"></i>
+                          <span class="text-[9px] font-black uppercase">GRAN CAMVIA</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-level">NIVEL 1</td>
+                      <td><span class="total-badge">30</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td style="opacity:0.3">-</td>
+                    </tr>
+                    
+                    <tr>
+                      <td class="col-level">NIVEL 2</td>
+                      <td><span class="total-badge">30</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td style="opacity:0.3">-</td>
+                    </tr>
+                    
+                    <tr>
+                      <td class="col-level">NIVEL 3</td>
+                      <td><span class="total-badge">60</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td style="opacity:0.3">-</td>
+                    </tr>
+                        
+                    <tr>
+                      <td class="col-level">NIVEL 4</td>
+                      <td><span class="total-badge">90</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td style="opacity:0.3">-</td>
+                    </tr>
+                        
+                    <tr>
+                      <td class="col-level">NIVEL 5</td>
+                      <td><span class="total-badge">120</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td style="opacity:0.3">-</td>
+                    </tr>
+                        
+                    <tr>
+                      <td class="col-level">NIVEL 6</td>
+                      <td><span class="total-badge">160</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td><span class="ultimate-pill">-</span></td>
+                    </tr>
+                        
+                    <tr>
+                      <td class="col-level">NIVEL 7</td>
+                      <td><span class="total-badge">400</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td><span class="ultimate-pill">-</span></td>
+                    </tr>
+                        
+                    <tr>
+                      <td class="col-level">NIVEL 8</td>
+                      <td><span class="total-badge">800</span></td>
+                      <td style="color:var(--tier-base)">-</td>
+                      <td style="color:var(--tier-mediano)">-</td>
+                      <td style="color:var(--tier-grande)">-</td>
+                      <td style="color:var(--tier-estelar)">-</td>
+                      <td><span class="ultimate-pill">-</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- FIN DE CÓDIGO DE TABLA DEL USUARIO -->
+
+            <!-- DESCRIPCIÓN (Abajo de la tabla) -->
+            <div class="mt-3 text-center max-w-[800px] px-4">
+                <p class="text-[14px] sm:text-[15px] text-gray-400 leading-snug font-medium">
+                    <strong class="text-[#00ff66]">CAMVIA</strong> está diseñado para crecer constantemente. A medida que avanzamos, aumentamos la cantidad de premios mensuales para que más participantes puedan convertirse en ganadores.
+                </p>
+            </div>
+            <!-- FIN DESCRIPCIÓN -->
+
+            <!-- NUEVA SECCIÓN: NIVELES DE SOCIOS Y BOTÓN -->
+            <div class="mt-16 sm:mt-24 mb-4 flex flex-col items-center text-center px-4">
+                <h3 class="font-title text-lg sm:text-xl font-bold text-gray-300 mb-0 uppercase tracking-widest drop-shadow-md">
+                    Próximamente
+                </h3>
+                <h4 class="font-title text-3xl sm:text-5xl font-black text-white mt-0 mb-1 tracking-tight leading-none drop-shadow-lg">
+                    Nivel de <span class="text-[#00ff66]">Socios</span>
+                </h4>
+                <p class="text-[14px] sm:text-[15px] text-gray-400 leading-snug font-medium max-w-2xl mt-1 mb-5">
+                    Al suscribirte participarás en sorteos exclusivos según tu nivel de socio.<br>
+                    Quienes se unan desde el inicio podrán acceder a más sorteos exclusivos.
+                </p>
+                
+                <!-- Botón estilo "Activa tu Suerte" con ancla a los planes -->
+                <a href="#planes" class="group relative inline-block rounded-full p-[2px] bg-gradient-to-r from-[#9333ea] via-[#d946ef] to-[#ec4899] shadow-[0_0_20px_rgba(217,70,239,0.25)] hover:shadow-[0_0_35px_rgba(217,70,239,0.45)] transition-all duration-300 cursor-pointer hover:text-white" style="text-decoration: none;">
+                    <div class="flex items-center justify-between gap-6 bg-[#0b0f12] rounded-full pr-1.5 pl-8 py-1.5">
+                        <span class="font-title text-white font-black tracking-widest text-sm sm:text-[15px] uppercase drop-shadow-md group-hover:text-white transition-colors">Activa Tu Suerte</span>
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-r from-[#d946ef] to-[#ec4899] flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                            <i class="ph-bold ph-arrow-right text-white text-xl"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- FIN NUEVA SECCIÓN -->
+
+        </div>
+    </div>
+
+  </section>
+
+  <!-- SCRIPT DE FONDO OPTIMIZADO -->
+  <script>
+    const particlesBox = document.getElementById('particles');
+    // Se adaptan las partículas dependiendo de si es móvil o pc
+    const isMobile = /Android|iPhone/i.test(navigator.userAgent);
+    const count = isMobile ? 15 : 36;
+
+    function makeParticles(n = count){
+      particlesBox.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.className = 'particle';
+        const size = 6 + Math.random() * 12;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDuration = (8 + Math.random() * 10) + 's';
+        s.style.animationDelay = (Math.random() * 6) + 's';
+        s.style.opacity = (0.12 + Math.random() * 0.25).toFixed(2);
+        particlesBox.appendChild(s);
+      }
+    }
+    makeParticles();
+
+    // Parallax optimizado usando translate3d para usar la GPU
+    const orbA = document.querySelector('.orb.a');
+    const orbB = document.querySelector('.orb.b');
+    const lerp = (a, b, t) => a + (b - a) * t;
+    let mx = 0, my = 0, tx = 0, ty = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = (e.clientX / window.innerWidth) * 2 - 1;
+      my = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    function loop(){
+      tx = lerp(tx, mx, 0.06);
+      ty = lerp(ty, my, 0.06);
+      if(orbA) orbA.style.transform = `translate3d(${tx * 12}px, ${ty * 12}px, 0)`;
+      if(orbB) orbB.style.transform = `translate3d(${-tx * 10}px, ${-ty * 10}px, 0)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Inicializar los iconos de la librería Lucide
+    lucide.createIcons();
+    
+    // SCRIPT PARA DESPLEGAR LA TABLA DE PREMIOS
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('toggleTableBtn');
+        const tableContainer = document.getElementById('tableContainer');
+        const caret = document.getElementById('tableCaret');
+        const textLabel = document.getElementById('toggleTableText');
+
+        if(toggleBtn && tableContainer) {
+            toggleBtn.addEventListener('click', () => {
+                tableContainer.classList.toggle('expanded');
+                
+                if(tableContainer.classList.contains('expanded')) {
+                    caret.style.transform = 'rotate(180deg)';
+                    textLabel.textContent = 'Ocultar distribución de premios';
+                } else {
+                    caret.style.transform = 'rotate(0deg)';
+                    textLabel.textContent = 'Curiosidad sobre la distribución de premios';
+                }
+            });
+        }
+    });
+  </script>
+
+</body>
+</html>
