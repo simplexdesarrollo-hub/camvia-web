@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/services/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import './register.css';
+import '@/app/register/register.css';
 
-export default function RegisterPage() {
+export default function RegisterView() {
     const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',

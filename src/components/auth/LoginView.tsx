@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { auth, googleProvider } from '@/services/firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import './login.css';
+import '@/app/login/login.css';
 
-export default function LoginPage() {
+export default function LoginView() {
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',

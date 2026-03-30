@@ -1,3 +1,5 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const BankView = dynamic(() => import('./BankView'), { ssr: false });

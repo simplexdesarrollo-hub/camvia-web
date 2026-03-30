@@ -1,4 +1,7 @@
-import { fetchHomeData } from '@/services/api';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { fetchHomeData, HomeResponse } from '@/services/api';
 import dynamic from 'next/dynamic';
 
 const Header = dynamic(() => import('@/components/Header'), { ssr: false });
@@ -7,8 +10,13 @@ import PricingCards from '@/components/PricingCards';
 import PremiosTable from '@/components/PremiosTable';
 import Footer from '@/components/Footer';
 
-export default async function PlanesPage() {
-  const data = await fetchHomeData();
+export default function PlanesPage() {
+  const [data, setData] = useState<HomeResponse | null>(null);
+
+  useEffect(() => {
+    fetchHomeData().then(setData);
+  }, []);
+
   const packages = data?.package ? [...data.package].sort((a, b) => a.id - b.id) : [];
 
   return (
