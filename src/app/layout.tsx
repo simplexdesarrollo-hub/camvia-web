@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-export const runtime = 'edge';
+
 import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import Particles from '../components/Particles';
@@ -30,6 +30,7 @@ export default function RootLayout({
     <html lang="es" data-theme="carbon" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
         <script src="https://unpkg.com/@phosphor-icons/web" async></script>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
       <body>
         {/* Background elements injected globally */}

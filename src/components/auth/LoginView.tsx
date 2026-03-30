@@ -54,12 +54,6 @@ export default function LoginView() {
 
     return (
         <main className="login-page-container">
-            {/* Background elements */}
-            <div className="bg-elements-login">
-                <div className="neon-grid-login"></div>
-                <div className="scanline-login"></div>
-            </div>
-
             <Link href="/" className="back-link-login">
                 <span className="material-symbols-outlined">arrow_back</span> Volver
             </Link>
@@ -67,10 +61,10 @@ export default function LoginView() {
             <div className="container-login">
                 <div className="card-login">
                     <header className="card-header-login">
-                        <div className="brand-logo-login">C</div>
+                        <img src="/logos/icono_camvia.png" alt="CAMVIA Icon" className="brand-logo-login-img" />
                         <div className="header-info-login">
-                            <h1>Identifícate</h1>
-                            <p>Ingresa a tu cuenta para gestionar tus premios y participar en sorteos.</p>
+                            <h1>Iniciar sesión</h1>
+                            <p>Bienvenido a Camvia</p>
                         </div>
                         <div className="shine-login"></div>
                     </header>
@@ -85,7 +79,7 @@ export default function LoginView() {
                                         <input 
                                             type="email" 
                                             className="input-field-login" 
-                                            placeholder="Ej. juan@camvia.com" 
+                                            placeholder="Ingrese su Correo" 
                                             required 
                                             value={formData.email}
                                             onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -99,7 +93,7 @@ export default function LoginView() {
                                         <input 
                                             type="password" 
                                             className="input-field-login" 
-                                            placeholder="••••••••" 
+                                            placeholder="Ingrese su Contraseña" 
                                             required 
                                             value={formData.pass}
                                             onChange={(e) => setFormData({...formData, pass: e.target.value})}
@@ -109,15 +103,19 @@ export default function LoginView() {
                             </div>
 
                             <button type="submit" className="btn-submit-login" disabled={loading}>
-                                {loading ? 'CONECTANDO...' : 'Entrar a mi universo'}
+                                {loading ? 'CONECTANDO...' : 'Iniciar Sesión'}
                             </button>
                         </form>
 
+                        <p className="register-link-login">
+                            ¿No tienes cuenta? <Link href="/register">Crear una cuenta</Link>
+                        </p>
+
                         <div className="divider-login">
-                            <span>O continúa con</span>
+                            <span>o</span>
                         </div>
 
-                        <button className="google-btn-login" onClick={handleGoogleLogin}>
+                         <button className="google-btn-login" onClick={handleGoogleLogin}>
                             <svg className="google-icon-login" viewBox="0 0 24 24">
                                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -126,14 +124,10 @@ export default function LoginView() {
                             </svg>
                             Google
                         </button>
-
-                        <p className="register-link-login">
-                            ¿Aún no eres parte? <Link href="/register">Regístrate aquí</Link>
-                        </p>
                     </section>
 
                     <footer className="card-footer-login">
-                        Sistemas encriptados © Camvia Tech Industries 2026
+                        Tus datos se protegen con cifrado y buenas prácticas. © Camvia 2026
                     </footer>
                 </div>
             </div>

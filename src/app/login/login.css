@@ -9,52 +9,18 @@
     z-index: 10;
 }
 
-.bg-elements-login {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.neon-grid-login {
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background-image: 
-        linear-gradient(rgba(0, 255, 127, .12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 127, .12) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: gridMove 20s linear infinite;
-}
-
-.scanline-login {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    mix-blend-mode: screen;
-    z-index: 1;
-}
-
-.scanline-login::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, .06), transparent);
-    animation: scan 6s linear infinite;
-}
-
 /* Back link */
 .back-link-login {
     position: fixed;
     top: 24px;
     left: 24px;
-    color: #94a3b8;
+    color: #475569;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 8px;
     z-index: 100;
-    font-weight: 700;
+    font-size: 14px;
     transition: color 0.3s ease;
 }
 
@@ -64,175 +30,157 @@
 
 .container-login {
     width: 100%;
-    max-width: 500px;
+    max-width: 480px;
     position: relative;
     z-index: 10;
 }
 
 .card-login {
-    background: rgba(13, 19, 24, 0.85);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+    background: #111820;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 28px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     position: relative;
+    padding: 24px;
 }
 
 .card-header-login {
-    padding: 32px 32px 20px;
+    padding: 20px 20px 10px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    position: relative;
+    gap: 16px;
 }
 
-.brand-logo-login {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-700));
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: #000;
-    font-size: 24px;
-    box-shadow: 0 10px 25px rgba(0, 255, 127, 0.4);
-    flex-shrink: 0;
+.brand-logo-login-img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
 }
 
 .header-info-login h1 {
     margin: 0;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
-    letter-spacing: -0.02em;
     color: #fff;
 }
 
 .header-info-login p {
-    margin: 4px 0 0;
-    color: #9fb2ac;
-    font-size: 15px;
-}
-
-.shine-login {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.shine-login::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: 0;
-    width: 33%;
-    height: 200%;
-    transform: rotate(45deg) translateX(-120%);
-    background: rgba(255, 255, 255, .05);
-    animation: sweep 2.8s ease-in-out infinite;
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 14px;
 }
 
 /* Form Styles */
 .card-body-login {
-    padding: 0 32px 32px;
+    padding: 20px;
 }
 
 .form-stack-login {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     margin-bottom: 24px;
 }
 
 .input-group-login {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .input-group-login label {
-    font-size: 11px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 500;
     color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    margin-bottom: 2px;
 }
 
 .input-wrapper-login {
     position: relative;
-    background: rgba(0, 0, 0, 0.3);
+    background: #1a222a;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     transition: all 0.3s ease;
 }
 
 .input-wrapper-login:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(0, 255, 127, 0.1);
-    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: #1d262f;
 }
 
 .input-icon-login {
     position: absolute;
-    left: 14px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
-    color: #94a3b8;
+    font-size: 20px;
+    color: #475569;
     transition: all 0.3s ease;
 }
 
 .input-wrapper-login:focus-within .input-icon-login {
-    color: var(--accent);
+    color: #fff;
 }
 
 .input-field-login {
     width: 100%;
     background: transparent;
     border: none;
-    padding: 14px 14px 14px 44px;
+    padding: 18px 18px 18px 54px;
     color: white;
     outline: none;
     font-size: 15px;
-    font-family: inherit;
-    font-weight: 500;
+}
+
+.input-field-login::placeholder {
+    color: #475569;
 }
 
 .btn-submit-login {
     width: 100%;
-    padding: 18px;
+    padding: 20px;
     border: none;
-    border-radius: 14px;
-    background: linear-gradient(to right, var(--accent), var(--accent-700));
+    border-radius: 16px;
+    background: #00f07c;
     color: #000;
-    font-weight: 900;
+    font-weight: 800;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 15px 35px rgba(0, 255, 127, 0.25);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    box-shadow: 0 10px 30px rgba(0, 240, 124, 0.2);
 }
 
 .btn-submit-login:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 45px rgba(0, 255, 127, 0.35);
+    box-shadow: 0 15px 40px rgba(0, 240, 124, 0.3);
+    background: #00ff84;
 }
 
 .btn-submit-login:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+}
+
+.register-link-login {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.register-link-login a {
+    color: #00f07c;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .divider-login {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 24px 0;
+    gap: 16px;
+    margin: 30px 0;
 }
 
 .divider-login::before,
@@ -240,22 +188,19 @@
     content: "";
     flex: 1;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .divider-login span {
-    font-size: 12px;
+    font-size: 14px;
     color: #475569;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.1em;
 }
 
 .google-btn-login {
     width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 18px;
+    border-radius: 14px;
+    background: #1a222a;
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #fff;
     font-weight: 700;
@@ -269,36 +214,23 @@
 }
 
 .google-btn-login:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+    background: #1d262f;
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .google-icon-login {
-    width: 20px;
-    height: 20px;
-}
-
-.register-link-login {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 15px;
-    color: #9fb2ac;
-}
-
-.register-link-login a {
-    color: var(--accent);
-    font-weight: 800;
-    text-decoration: none;
+    width: 24px;
+    height: 24px;
 }
 
 .card-footer-login {
-    padding: 0 32px 32px;
+    padding-top: 24px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
     text-align: center;
-    font-size: 11px;
+    font-size: 12px;
     color: #475569;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    line-height: 1.6;
 }
 
 /* Toast */
@@ -308,7 +240,7 @@
     left: 50%;
     transform: translateX(-50%) translateY(100px);
     background: #151b21;
-    border: 1px solid var(--accent);
+    border: 1px solid #00f07c;
     padding: 16px 28px;
     border-radius: 99px;
     z-index: 1000;
@@ -325,14 +257,14 @@
 }
 
 .toast-login.error {
-    border-color: #ff5f5f;
+    border-color: #f43f5e;
 }
 
 .toast-login .material-symbols-outlined {
     font-size: 20px;
-    color: var(--accent);
+    color: #00f07c;
 }
 
 .toast-login.error .material-symbols-outlined {
-    color: #ff5f5f;
+    color: #f43f5e;
 }

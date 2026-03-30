@@ -71,12 +71,6 @@ export default function RegisterView() {
 
     return (
         <main className="register-page-container">
-            {/* Background elements */}
-            <div className="bg-elements-reg">
-                <div className="neon-grid-reg"></div>
-                <div className="scanline-reg"></div>
-            </div>
-
             <Link href="/" className="back-link-reg">
                 <span className="material-symbols-outlined">arrow_back</span> Volver
             </Link>
@@ -84,7 +78,7 @@ export default function RegisterView() {
             <div className="container-reg">
                 <div className="card-reg">
                     <header className="card-header-reg">
-                        <div className="brand-logo-reg">C</div>
+                        <img src="/logos/icono_camvia.png" alt="CAMVIA Icon" className="brand-logo-reg-img" />
                         <div className="header-info-reg">
                             <h1>Regístrate</h1>
                             <p>Únete hoy y participa por múltiples premios en un solo lugar. Planes desde <b>S/ 9/mes</b>.</p>

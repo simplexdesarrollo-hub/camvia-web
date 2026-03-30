@@ -31,11 +31,11 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 40px;
 }
 
 .section, .games-stack {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 40px;
 }
 
 html,
@@ -703,6 +703,7 @@ header {
   flex-direction: column;
   gap: 16px;
   position: relative;
+  scroll-margin-top: 100px;
 }
 
 .game-row {
