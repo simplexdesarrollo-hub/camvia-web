@@ -4,8 +4,10 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/services/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import Header from '@/components/Header';
+import dynamic from 'next/dynamic';
 import { fetchHomeData, fetchRewards, HomeResponse, Reward } from '@/services/api';
+
+const Header = dynamic(() => import('@/components/Header'), { ssr: false });
 
 const EventosPage = () => {
     const router = useRouter();

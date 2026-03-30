@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider, Auth } from "firebase/auth";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPZpkQ-pMZFZSOpZY6q-wgScHUZSyhaRk",
@@ -12,10 +12,16 @@ const firebaseConfig = {
   measurementId: "G-SDCD5H8SCD"
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-const storage = getStorage(app);
-const googleProvider = new GoogleAuthProvider();
+let auth: Auth;
+let storage: FirebaseStorage;
+let googleProvider: GoogleAuthProvider;
+
+if (typeof window !== "undefined") {
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  auth = getAuth(app);
+  storage = getStorage(app);
+  googleProvider = new GoogleAuthProvider();
+}
 
 export { auth, storage, googleProvider };
 

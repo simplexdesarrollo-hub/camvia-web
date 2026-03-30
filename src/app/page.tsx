@@ -1,7 +1,10 @@
 import { fetchHomeData } from '../services/api';
-import Header from '../components/Header';
+import dynamic from 'next/dynamic';
+
+const Header = dynamic(() => import('../components/Header'), { ssr: false });
+const HeroSplit = dynamic(() => import('../components/HeroSplit'), { ssr: false });
+
 import MegaBanner from '../components/MegaBanner';
-import HeroSplit from '../components/HeroSplit';
 import PrizesCarousel from '../components/PrizesCarousel';
 import Countdown from '../components/Countdown';
 import PricingCards from '../components/PricingCards';
