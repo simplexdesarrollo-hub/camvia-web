@@ -1,7 +1,6 @@
 /* login-page-container Styles */
 .login-page-container {
     position: relative;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,7 +13,7 @@
     position: fixed;
     top: 24px;
     left: 24px;
-    color: #475569;
+    color: #94a3b8;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -36,7 +35,8 @@
 }
 
 .card-login {
-    background: #111820; /* Dark unified background */
+    background: #111820;
+    /* Dark unified background */
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 28px;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
@@ -51,6 +51,8 @@
     align-items: center;
     gap: 16px;
     background: transparent !important;
+    backdrop-filter: none !important;
+    border-bottom: none !important;
 }
 
 .brand-logo-login-img {
@@ -98,8 +100,10 @@
 
 .input-wrapper-login {
     position: relative;
-    background: #1a222a !important; /* PLOMO OSCURO */
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Sutil border */
+    background: #1a222a !important;
+    /* PLOMO OSCURO */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Sutil border */
     border-radius: 12px;
     transition: all 0.3s ease;
     overflow: hidden;
@@ -129,10 +133,21 @@
     font-size: 15px;
 }
 
+.input-field-login::placeholder {
+    color: #475569;
+}
+
+/* Style for native date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.6;
+    cursor: pointer;
+}
+
 /* Force dark color on autofill */
 .input-field-login:-webkit-autofill,
-.input-field-login:-webkit-autofill:hover, 
-.input-field-login:-webkit-autofill:focus, 
+.input-field-login:-webkit-autofill:hover,
+.input-field-login:-webkit-autofill:focus,
 .input-field-login:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px #1a222a inset !important;
     -webkit-text-fill-color: white !important;

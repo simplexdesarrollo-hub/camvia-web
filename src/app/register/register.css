@@ -1,7 +1,6 @@
-/* common register Styles */
+/* register-page-container Styles */
 .register-page-container {
     position: relative;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,7 +13,7 @@
     position: fixed;
     top: 24px;
     left: 24px;
-    color: #475569;
+    color: #94a3b8;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -42,14 +41,16 @@
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     position: relative;
-    padding: 20px;
+    padding: 32px;
 }
 
 .card-header-reg {
-    padding: 20px 20px 10px;
+    padding: 0 0 24px;
     display: flex;
     align-items: center;
     gap: 16px;
+    background: transparent !important;
+    border-bottom: none !important;
 }
 
 .brand-logo-reg-img {
@@ -72,13 +73,13 @@
 }
 
 .card-body-reg {
-    padding: 20px;
+    padding: 0;
 }
 
 .form-grid-reg {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 24px;
     margin-bottom: 24px;
 }
 
@@ -91,68 +92,127 @@
 .input-group-reg {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .input-group-reg label {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: #94a3b8;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .input-wrapper-reg {
     position: relative;
-    background: #171c22;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1a222a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .input-wrapper-reg:focus-within {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: #1e242c;
+    border-color: rgba(255, 255, 255, 0.15);
+    background: #1d262f !important;
 }
 
 .input-icon-reg {
     position: absolute;
-    left: 14px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
-    color: #94a3b8;
+    font-size: 20px;
+    color: #475569;
 }
 
 .input-wrapper-reg:focus-within .input-icon-reg {
-    color: #fff;
+    color: #94a3b8; /* Less bright on focus */
+}
+
+/* Style for native date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 .input-field-reg {
     width: 100%;
-    background: transparent;
-    border: none;
-    padding: 14px 14px 14px 44px;
-    color: white;
+    background: transparent !important;
+    border: none !important;
+    padding: 16px 16px 16px 48px;
+    color: white !important;
     outline: none;
     font-size: 15px;
+}
+
+.input-field-reg::placeholder {
+    color: #475569;
+}
+
+/* Fix date input text color when empty (plomo) */
+input[type="date"].input-field-reg {
+    color: #475569 !important;
+}
+
+input[type="date"].input-field-reg:focus,
+input[type="date"].input-field-reg:not(:placeholder-shown),
+input[type="date"].input-field-reg:valid {
+    color: white !important;
+}
+
+/* Autofill fix */
+.input-field-reg:-webkit-autofill,
+.input-field-reg:-webkit-autofill:hover,
+.input-field-reg:-webkit-autofill:focus,
+.input-field-reg:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #1a222a inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .btn-submit-reg {
     width: 100%;
     padding: 18px;
     border: none;
-    border-radius: 16px;
-    background: #00df82;
+    border-radius: 14px;
+    background: #00f07c;
     color: #000;
     font-weight: 800;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 240, 124, 0.2);
 }
 
 .btn-submit-reg:hover {
     transform: translateY(-2px);
-    background: #00ef8e;
+    background: #00ff84;
+    box-shadow: 0 15px 40px rgba(0, 240, 124, 0.3);
+}
+
+.checkbox-row-reg {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 10px 0 24px;
+}
+
+.checkbox-row-reg input {
+    width: 18px;
+    height: 18px;
+    accent-color: #00f07c;
+    margin-top: 2px;
+}
+
+.checkbox-row-reg label {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.checkbox-row-reg a {
+    color: #00f07c;
+    text-decoration: none;
 }
 
 .login-link-reg {
@@ -163,14 +223,37 @@
 }
 
 .login-link-reg a {
-    color: #00df82;
+    color: #00f07c;
     font-weight: 700;
     text-decoration: none;
 }
 
 .card-footer-reg {
-    padding-top: 20px;
+    padding-top: 24px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
     text-align: center;
     font-size: 11px;
     color: #475569;
+}
+
+/* Toast */
+.toast-reg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #151b21;
+    border: 1px solid #00f07c;
+    padding: 16px 28px;
+    border-radius: 99px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.toast-reg.visible {
+    transform: translateX(-50%) translateY(0);
 }
