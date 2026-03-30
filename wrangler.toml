@@ -1,6 +1,0 @@
-name = "camvia-web"
-pages_build_output_dir = ".vercel/output"
-
-# Node.js compatibility is required for Next.js
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2024-05-02"
