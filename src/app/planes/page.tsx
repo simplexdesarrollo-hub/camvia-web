@@ -1,5 +1,8 @@
 import { fetchHomeData } from '@/services/api';
-import Header from '@/components/Header';
+import dynamic from 'next/dynamic';
+
+const Header = dynamic(() => import('@/components/Header'), { ssr: false });
+
 import PricingCards from '@/components/PricingCards';
 import PremiosTable from '@/components/PremiosTable';
 import Footer from '@/components/Footer';
