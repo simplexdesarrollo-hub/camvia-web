@@ -36,20 +36,21 @@
 }
 
 .card-login {
-    background: #111820;
+    background: #111820; /* Dark unified background */
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 28px;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     position: relative;
-    padding: 24px;
+    padding: 32px;
 }
 
 .card-header-login {
-    padding: 20px 20px 10px;
+    padding: 0 0 24px;
     display: flex;
     align-items: center;
     gap: 16px;
+    background: transparent !important;
 }
 
 .brand-logo-login-img {
@@ -73,7 +74,7 @@
 
 /* Form Styles */
 .card-body-login {
-    padding: 20px;
+    padding: 0;
 }
 
 .form-stack-login {
@@ -93,20 +94,20 @@
     font-size: 14px;
     font-weight: 500;
     color: #94a3b8;
-    margin-bottom: 2px;
 }
 
 .input-wrapper-login {
     position: relative;
-    background: #1a222a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #1a222a !important; /* PLOMO OSCURO */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Sutil border */
     border-radius: 12px;
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .input-wrapper-login:focus-within {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: #1d262f;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: #1e262f !important;
 }
 
 .input-icon-login {
@@ -116,58 +117,51 @@
     transform: translateY(-50%);
     font-size: 20px;
     color: #475569;
-    transition: all 0.3s ease;
-}
-
-.input-wrapper-login:focus-within .input-icon-login {
-    color: #fff;
 }
 
 .input-field-login {
     width: 100%;
-    background: transparent;
-    border: none;
-    padding: 18px 18px 18px 54px;
-    color: white;
+    background: transparent !important;
+    border: none !important;
+    padding: 18px 18px 18px 52px;
+    color: white !important;
     outline: none;
     font-size: 15px;
 }
 
-.input-field-login::placeholder {
-    color: #475569;
+/* Force dark color on autofill */
+.input-field-login:-webkit-autofill,
+.input-field-login:-webkit-autofill:hover, 
+.input-field-login:-webkit-autofill:focus, 
+.input-field-login:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #1a222a inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .btn-submit-login {
     width: 100%;
-    padding: 20px;
+    padding: 18px;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     background: #00f07c;
     color: #000;
     font-weight: 800;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 240, 124, 0.2);
 }
 
 .btn-submit-login:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(0, 240, 124, 0.3);
     background: #00ff84;
-}
-
-.btn-submit-login:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
 }
 
 .register-link-login {
     margin-top: 20px;
     text-align: center;
     font-size: 14px;
-    color: #94a3b8;
+    color: #9fb2ac;
 }
 
 .register-link-login a {
@@ -198,8 +192,8 @@
 
 .google-btn-login {
     width: 100%;
-    padding: 18px;
-    border-radius: 14px;
+    padding: 16px;
+    border-radius: 12px;
     background: #1a222a;
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #fff;
@@ -210,17 +204,11 @@
     justify-content: center;
     gap: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.google-btn-login:hover {
-    background: #1d262f;
-    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .google-icon-login {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 .card-footer-login {
@@ -228,9 +216,8 @@
     margin-top: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
     color: #475569;
-    line-height: 1.6;
 }
 
 /* Toast */
@@ -247,24 +234,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     color: white;
 }
 
 .toast-login.visible {
     transform: translateX(-50%) translateY(0);
-}
-
-.toast-login.error {
-    border-color: #f43f5e;
-}
-
-.toast-login .material-symbols-outlined {
-    font-size: 20px;
-    color: #00f07c;
-}
-
-.toast-login.error .material-symbols-outlined {
-    color: #f43f5e;
 }

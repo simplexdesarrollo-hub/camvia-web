@@ -66,7 +66,6 @@ export default function LoginView() {
                             <h1>Iniciar sesión</h1>
                             <p>Bienvenido a Camvia</p>
                         </div>
-                        <div className="shine-login"></div>
                     </header>
 
                     <section className="card-body-login">
