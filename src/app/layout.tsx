@@ -34,6 +34,7 @@ export default function RootLayout({
       </head>
       <body>
         {/* Background elements injected globally */}
+        <div className="background-layer" aria-hidden="true"></div>
         <div className="neon-grid-wrap"><div className="neon-grid"></div></div>
         <div className="orb a" aria-hidden="true"></div>
         <div className="orb b" aria-hidden="true"></div>

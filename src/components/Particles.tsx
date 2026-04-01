@@ -6,8 +6,10 @@ export default function Particles() {
   const [particles, setParticles] = useState<any[]>([]);
 
   useEffect(() => {
-    const isMobile = /Android|iPhone/i.test(navigator.userAgent);
-    const count = isMobile ? 15 : 35;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) return; // Disable for performance on low-end mobile
+    
+    const count = 35;
     const newParticles = [];
 
     for (let i = 0; i < count; i++) {
