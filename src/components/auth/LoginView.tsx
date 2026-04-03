@@ -61,10 +61,9 @@ export default function LoginView() {
             <div className="container-login">
                 <div className="card-login">
                     <header className="card-header-login">
-                        <img src="/logos/icono_camvia.png" alt="CAMVIA Icon" className="brand-logo-login-img" />
+                        <img src="/images/logos/logo_cambia.png" alt="CAMVIA Logo" className="brand-logo-login-img animated-logo" />
                         <div className="header-info-login">
-                            <h1>Iniciar sesión</h1>
-                            <p>Bienvenido a Camvia</p>
+                            <p>Bienvenido a la experiencia Camvia</p>
                         </div>
                     </header>
 

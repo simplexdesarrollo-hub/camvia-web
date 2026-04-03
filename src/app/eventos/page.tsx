@@ -19,6 +19,9 @@ export default function EventosPage() {
   const TICKET_PRICE = homeData ? parseFloat(homeData.ticket.priceEntered) : 5;
 
   useEffect(() => {
+    // Force scroll to top on mount
+    window.scrollTo(0, 0);
+
     async function loadData() {
       const data = await fetchHomeData();
       if (data) {
@@ -114,7 +117,7 @@ export default function EventosPage() {
             </p>
             <div className="hero-scroll" style={{ marginTop: '30px' }}>
               <Link href="#participar" className="btn btn-accent btn-large" style={{ background: 'linear-gradient(90deg, #ffbf00 0%, #d97706 100%)', color: '#000', border: 'none' }}>
-                COMPRA AHORA <i className="ph ph-arrow-right"></i>
+                COMPRA AHORA <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
             </div>
           </div>
@@ -124,7 +127,7 @@ export default function EventosPage() {
         <section className="event-countdown-bar">
           <div className="container countdown-flex">
             <div className="countdown-info">
-              <div className="info-icon"><i className="ph ph-dice-five"></i></div>
+              <div className="info-icon"><span className="material-symbols-outlined">casino</span></div>
               <div className="info-text">
                 <h3>OTORGAMOS EL PREMIO EN:</h3>
                 <p>Cronómetro para el próximo sorteo dominical</p>
@@ -153,7 +156,7 @@ export default function EventosPage() {
               </div>
             </div>
 
-            <div className="countdown-icon-right"><i className="ph ph-hourglass-high"></i></div>
+            <div className="countdown-icon-right"><span className="material-symbols-outlined">hourglass_top</span></div>
           </div>
         </section>
 
@@ -169,13 +172,13 @@ export default function EventosPage() {
               const isCenter = i === 1;
               const theme = i === 0 ? 'theme-silver' : i === 1 ? 'theme-gold' : 'theme-bronze';
               const label = i === 0 ? 'PLATA' : i === 1 ? 'ORO' : 'BRONCE';
-              
+
               if (!reward) {
                 return (
                   <div key={i} className={`prize-card-exclusive ${theme} ${isCenter ? 'active' : ''}`}>
                     <span className="card-tag">{label}</span>
                     <div className="prize-visual">
-                      <div className="inner-circle"><i className="ph ph-mask-sad"></i></div>
+                      <div className="inner-circle"><span className="material-symbols-outlined">sentiment_dissatisfied</span></div>
                     </div>
                     <div className="prize-content">
                       <h3 className="prize-amount">---</h3>
@@ -189,19 +192,21 @@ export default function EventosPage() {
 
               return (
                 <div key={reward.id} className={`prize-card-exclusive ${theme} ${isCenter ? 'active' : ''}`}>
-                  {isCenter && <div className="crown-badge"><i className="ph ph-crown-simple"></i></div>}
+                  {isCenter && <div className="crown-badge"><span className="material-symbols-outlined" style={{ fontSize: '32px' }}>crown</span></div>}
                   {isCenter ? <span className="card-tag-badge">GANADOR</span> : <span className="card-tag">{label}</span>}
-                  
+
                   <div className="prize-visual">
                     <div className={`inner-circle ${isCenter ? 'gold-glow' : ''}`}>
                       {reward.url && reward.url.trim() !== "" ? (
                         <img src={reward.url} alt={reward.name} style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       ) : (
-                        <i className={`ph ${reward.icon?.startsWith('ph-') ? reward.icon : `ph-${reward.icon || 'gift'}`}`} style={{ color: isCenter ? '#ffbf00' : 'white', opacity: 0.8 }}></i>
+                        <span className="material-symbols-outlined" style={{ color: isCenter ? '#ffbf00' : 'white', fontSize: '48px' }}>
+                          {reward.icon?.replace('ph-', '').replace('-', '_') || 'redeem'}
+                        </span>
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="prize-content">
                     <h3 className={`prize-amount ${isCenter ? 'text-accent-yellow' : ''}`}>
                       {displayValue || reward.name}
@@ -241,9 +246,9 @@ export default function EventosPage() {
                 </div>
 
                 <div className="main-qty-selector">
-                  <button onClick={handleMinus} className="ctrl-btn"><i className="ph ph-minus"></i></button>
+                  <button onClick={handleMinus} className="ctrl-btn"><span className="material-symbols-outlined">remove</span></button>
                   <span className="display-qty">{ticketQty}</span>
-                  <button onClick={handlePlus} className="ctrl-btn"><i className="ph ph-plus"></i></button>
+                  <button onClick={handlePlus} className="ctrl-btn"><span className="material-symbols-outlined">add</span></button>
                 </div>
               </div>
 
@@ -263,7 +268,7 @@ export default function EventosPage() {
                   onClick={handlePurchase}
                   disabled={ticketQty === 0}
                 >
-                  REALIZAR PAGO <i className="ph ph-arrow-right"></i>
+                  REALIZAR PAGO <span className="material-symbols-outlined">arrow_forward</span>
                 </button>
               </div>
             </div>
@@ -290,7 +295,7 @@ export default function EventosPage() {
           }
           
           .event-hero {
-            background: linear-gradient(180deg, rgba(255, 191, 0, 0.05) 0%, transparent 100%) !important;
+            
             padding: 60px 0 80px !important;
           }
         }
@@ -300,7 +305,7 @@ export default function EventosPage() {
           padding: 50px 0 50px;
           text-align: center;
           position: relative;
-          background: radial-gradient(circle at 50% -20%, rgba(255, 191, 0, 0.1), transparent 60%);
+          
         }
 
         .hero-title {

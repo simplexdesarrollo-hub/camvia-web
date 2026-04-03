@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function SpecialEvents() {
   return (
     <section className="container section" id="eventos">
@@ -39,9 +41,9 @@ export default function SpecialEvents() {
               </div>
             </div>
 
-            <button className="btn-event-primary">
-              VER EVENTO <i className="ph ph-arrow-right"></i>
-            </button>
+            <Link href="/eventos" className="btn-event-primary">
+              VER EVENTO <span className="material-symbols-outlined">arrow_forward</span>
+            </Link>
           </div>
         </div>
 

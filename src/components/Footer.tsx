@@ -6,7 +6,12 @@ export default function Footer() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-col brand-col">
-              <span className="brand-footer">CAMVIA</span>
+              <img
+                src="/images/logos/logo_cambia.png"
+                alt="CAMVIA Logo"
+                className="footer-logo"
+                style={{ height: '30px', marginBottom: '20px', display: 'block' }}
+              />
               <p>
                 Plataforma digital de juegos, dinámicas y sorteos diseñada para ofrecer oportunidades reales de ganar, con reglas claras y premios confirmados.
               </p>
