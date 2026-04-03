@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camvia • Sorteo Año Nuevo - Golden Ticket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Montserrat (Títulos fuertes) e Inter (Lectura clara) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@400;700;800;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root{
+      --gold-primary: #FFD700;
+      --gold-secondary: #FDB931;
+      --silver: #E0E0E0;
+      --bronze: #CD7F32;
+    }
+
+    body{
+      background: linear-gradient(-45deg, #050505, #1a1a1a, #0a0a0a);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Títulos Modernos */
+    h1, h2, h3, .font-title {
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: -0.02em;
+    }
+
+    /* Fondo animado sutil */
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px),
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    /* Glass Card Mejorada */
+    .glass-card {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Efecto Glow en tarjetas */
+    .glass-card:hover {
+        border-color: rgba(255, 215, 0, 0.3);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+
+    /* Botón Dorado Premium */
+    .btn-gold {
+      background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+      color: #3b2800; /* Color oscuro para contraste en oro */
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid #FFE082;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+    
+    .btn-gold::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        transition: 0.5s;
+    }
+    .btn-gold:hover::before { left: 100%; }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6); }
+    .btn-gold:active { transform: translateY(0); }
+
+    /* Texto Gradiente */
+    .text-gold-gradient {
+      background: linear-gradient(to right, #FFD700, #FDB931, #FFF8DC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+    }
+
+    /* --- EL SÚPER GOLDEN TICKET --- */
+    .golden-ticket-item {
+        /* Fondo metálico dorado realista */
+        background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                    radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+        position: relative;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transform-style: preserve-3d;
+        border: 1px solid #B8860B;
+    }
+
+    .golden-ticket-item:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.4);
+        z-index: 10;
+    }
+
+    /* Brillo holográfico que pasa */
+    .golden-ticket-item::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+        transform: rotate(30deg);
+        animation: hologram 6s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes hologram {
+        0% { transform: translate(-100%, -100%) rotate(30deg); }
+        20% { transform: translate(100%, 100%) rotate(30deg); }
+        100% { transform: translate(100%, 100%) rotate(30deg); }
+    }
+
+    /* Textura de ruido suave para realismo */
+    .golden-ticket-texture {
+        position: absolute;
+        inset: 0;
+        opacity: 0.15;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        pointer-events: none;
+    }
+
+    /* Texto grabado en el ticket */
+    .ticket-text-engraved {
+        color: #3b2800; /* Marrón muy oscuro/dorado */
+        text-shadow: 1px 1px 0px rgba(255,255,255,0.4), -1px -1px 0px rgba(0,0,0,0.1);
+    }
+    
+    .ticket-code-font {
+        font-family: 'Cinzel', serif; /* Fuente elegante para el código */
+    }
+
+    /* Parte derecha del ticket (desprendible visualmente) */
+    .ticket-stub {
+        border-left: 2px dashed rgba(59, 40, 0, 0.3);
+        background: rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+    /* Muescas del ticket */
+    .ticket-stub::before, .ticket-stub::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: #1a1a1a; /* Color del fondo detrás del ticket */
+        border-radius: 50%;
+        left: -8px;
+        z-index: 5;
+        box-shadow: inset -2px -2px 4px rgba(0,0,0,0.5); /* Sombra interna para profundidad */
+    }
+    .ticket-stub::before { top: -8px; }
+    .ticket-stub::after { bottom: -8px; }
+
+    /* Animaciones */
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #FFD700; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center shadow-lg text-black font-bold">
+            <i class="fas fa-ticket-alt"></i>
+        </div>
+        <span class="text-2xl font-title font-black tracking-tighter text-white">CAMVIA <span class="text-yellow-400 text-sm align-top font-normal">GOLD</span></span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-sm font-bold tracking-wide text-gray-300 uppercase">
+        <a href="#" class="hover:text-yellow-400 transition">Inicio</a>
+        <a href="#premios" class="hover:text-yellow-400 transition">Premios</a>
+        <a href="#participar" class="text-yellow-400 border-b-2 border-yellow-400 pb-1">Tickets</a>
+      </div>
+
+      <button class="px-5 py-2 rounded-full border border-white/20 hover:border-yellow-400 hover:text-yellow-400 text-xs font-bold transition uppercase tracking-wide">
+        Mi Cuenta
+      </button>
+    </div>
+  </nav>
+
+  <!-- 1. HERO (SOLO BANNER) -->
+  <header class="relative pt-32 pb-32 overflow-hidden flex items-center">
+    <div class="hero-bg"></div>
+    <!-- Decoración de fondo -->
+    <div class="absolute top-20 right-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="relative z-10 text-center max-w-5xl mx-auto px-4 w-full">
+      <span class="inline-block py-1 px-4 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-bold tracking-widest uppercase mb-6 animate-pulse">
+        ● En Vivo: Sorteo de Año Nuevo
+      </span>
+      
+      <h1 class="text-5xl md:text-8xl font-black mb-8 leading-tight drop-shadow-xl">
+        CONSIGUE TU <br>
+        <span class="text-gold-gradient">GOLDEN TICKET</span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+        Celebra el inicio de año con la oportunidad de ganar premios exclusivos. Tu suerte brilla más que nunca.
+      </p>
+
+      <div class="flex justify-center gap-4">
+        <a href="#participar" class="btn-gold px-10 py-4 rounded-full font-bold shadow-lg shadow-yellow-500/20 flex items-center gap-2 text-black text-lg">
+            Comprar Ahora <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓN DEDICADA AL CRONÓMETRO -->
+  <section class="border-y border-white/5 bg-black/40 backdrop-blur-sm relative z-20">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <h3 class="text-xl font-bold text-white uppercase tracking-wider font-title">Tiempo Restante</h3>
+                <p class="text-xs text-gray-500">Para el cierre de inscripciones</p>
+            </div>
+            
+            <div class="flex items-center gap-4 md:gap-8">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-black text-white font-title" id="cDays">02</div>
+                    <div class="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Días</div>
+                </div>
+                <div class="text-2xl font-thin text-gray-600">:</div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-black text-white font-title" id="cHours">14</div>
+                    <div class="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Hrs</div>
+                </div>
+                <div class="text-2xl font-thin text-gray-600">:</div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-black text-white font-title" id="cMins">35</div>
+                    <div class="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Min</div>
+                </div>
+                <div class="text-2xl font-thin text-gray-600">:</div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-black text-white font-title" id="cSecs">20</div>
+                    <div class="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Seg</div>
+                </div>
+            </div>
+            
+            <div class="hidden md:block">
+                <i class="fas fa-hourglass-half text-3xl text-yellow-500/20 animate-pulse"></i>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. PREMIOS (Cuadrados Perfectos) -->
+  <section id="premios" class="py-20 relative bg-black/20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-black mb-2 font-title">PREMIOS <span class="text-yellow-400">EXCLUSIVOS</span></h2>
+        <p class="text-gray-400 text-sm">Tres oportunidades de ganar a lo grande.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- 2nd Place -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-4 aspect-square group relative border-t-4 border-gray-400">
+            <div class="absolute top-4 right-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Plata</div>
+            <div class="w-24 h-24 bg-gray-800/50 rounded-full flex items-center justify-center group-hover:scale-110 transition duration-500 shadow-inner">
+                <i class="fas fa-laptop text-5xl text-gray-300 drop-shadow-lg"></i>
+            </div>
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-white mb-1">Laptop Pro</h3>
+                <p class="text-xs text-gray-400">Alta Gama</p>
+            </div>
+        </div>
+
+        <!-- 1st Place (Destacado) -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-4 aspect-square group relative border-t-4 border-yellow-400 bg-gradient-to-b from-yellow-900/10 to-transparent transform md:-translate-y-4 shadow-[0_10px_40px_rgba(255,215,0,0.1)]">
+            <div class="absolute top-0 right-0 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Ganador</div>
+            <div class="absolute -top-6 w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center border-4 border-black shadow-lg z-20">
+                <i class="fas fa-crown text-black"></i>
+            </div>
+            
+            <div class="w-32 h-32 bg-yellow-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition duration-500 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
+                <i class="fas fa-sack-dollar text-6xl text-yellow-400 drop-shadow-lg"></i>
+            </div>
+            <div class="text-center">
+                <h3 class="text-4xl font-black text-white mb-1 font-title text-gold-gradient">S/ 500</h3>
+                <p class="text-xs text-yellow-500 font-bold uppercase tracking-widest border border-yellow-500/30 px-2 py-1 rounded">Premio Mayor</p>
+            </div>
+        </div>
+
+        <!-- 3rd Place -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-4 aspect-square group relative border-t-4 border-orange-700">
+            <div class="absolute top-4 right-4 text-xs font-bold text-orange-400 uppercase tracking-wider">Bronce</div>
+            <div class="w-24 h-24 bg-orange-900/20 rounded-full flex items-center justify-center group-hover:scale-110 transition duration-500 shadow-inner">
+                <i class="fas fa-gift text-5xl text-orange-500 drop-shadow-lg"></i>
+            </div>
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-white mb-1">Gift Card</h3>
+                <p class="text-xs text-gray-400">Vale de S/ 100</p>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ZONA DE COMPRA Y BILLETERA (MEJORADA) -->
+  <section id="participar" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Panel Izquierdo: Compra (Centrado para móviles) -->
+        <div class="lg:col-span-5 space-y-6 order-1">
+            <div class="glass-card p-6 sm:p-8 rounded-3xl border-t-4 border-t-yellow-500 relative overflow-hidden text-center">
+                <!-- Decoración -->
+                <div class="absolute inset-0 bg-gradient-to-b from-yellow-500/5 to-transparent pointer-events-none"></div>
+
+                <h2 class="text-3xl font-black mb-2 font-title text-white">Comprar Tickets</h2>
+                <p class="text-sm text-gray-400 mb-8 max-w-xs mx-auto">Selecciona cuantos tickets deseas y únete al sorteo de fin de año.</p>
+
+                <!-- Precio Centrado -->
+                <div class="inline-flex flex-col items-center mb-8 bg-black/40 p-4 rounded-2xl border border-yellow-500/20 shadow-inner min-w-[200px]">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Precio Unitario</span>
+                    <span class="text-3xl font-bold text-yellow-400 font-title drop-shadow-md">S/ 5.00</span>
+                </div>
+
+                <!-- Control Cantidad Centrado -->
+                <div class="mb-8 max-w-sm mx-auto">
+                    <!-- Botones Rápidos -->
+                    <div class="flex justify-center gap-2 mb-4">
+                        <button onclick="addQty(1)" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-full border border-white/10 transition">+1</button>
+                        <button onclick="addQty(5)" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-full border border-white/10 transition">+5</button>
+                        <button onclick="addQty(10)" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-full border border-white/10 transition">+10</button>
+                    </div>
+                    
+                    <!-- Input Gigante -->
+                    <div class="flex items-center justify-center gap-4 bg-black/50 rounded-full p-2 border border-white/10 shadow-lg">
+                        <button id="minusBtn" class="w-14 h-14 bg-gray-800 hover:bg-red-500/20 text-white text-xl rounded-full transition flex items-center justify-center shadow-lg active:scale-90">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" id="qty" value="0" readonly class="w-24 bg-transparent text-center text-5xl font-bold text-white outline-none font-title">
+                        <button id="plusBtn" class="w-14 h-14 bg-gray-800 hover:bg-green-500/20 text-white text-xl rounded-full transition flex items-center justify-center shadow-lg active:scale-90">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Total y Botón -->
+                <div class="border-t border-white/10 pt-6">
+                    <div class="flex justify-between items-end mb-6 px-4">
+                        <span class="text-sm text-gray-400 font-medium uppercase tracking-wide text-left">Total<br>a Pagar</span>
+                        <span class="text-4xl font-black text-white leading-none" id="totalDisplay">S/ 0.00</span>
+                    </div>
+                    <button id="buyBtn" disabled class="w-full btn-gold py-5 rounded-2xl shadow-[0_10px_20px_rgba(255,215,0,0.2)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:grayscale transition transform active:scale-95 text-black font-black text-lg uppercase tracking-widest">
+                        <span>Realizar Pago</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botón Admin (Discreto) -->
+            <button id="drawBtn" disabled class="w-full py-4 rounded-xl border border-dashed border-gray-800 text-gray-600 text-xs hover:text-gray-400 hover:border-gray-600 transition flex items-center justify-center gap-2 disabled:opacity-0">
+                <i class="fas fa-lock"></i> Panel Administrativo
+            </button>
+        </div>
+
+        <!-- Panel Derecho: Billetera Visual (7 columnas) -->
+        <div class="lg:col-span-7 order-2">
+            <div class="glass-card rounded-3xl h-full min-h-[600px] flex flex-col overflow-hidden border border-white/10 bg-[#1a1a1a]">
+                <!-- Cabecera Billetera -->
+                <div class="bg-black/60 p-6 border-b border-white/5 flex justify-between items-center backdrop-blur-md sticky top-0 z-10">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-wallet text-yellow-500"></i> Mi Billetera
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">Bóveda de Golden Tickets</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-black text-white" id="ticketsCountBadge">0</span>
+                        <span class="text-xs text-gray-500 block uppercase tracking-wide">Tickets</span>
+                    </div>
+                </div>
+
+                <!-- Área de Tickets (Grid/List) -->
+                <div id="ticketsList" class="flex-grow p-6 overflow-y-auto custom-scroll space-y-4 bg-black/40 relative">
+                    
+                    <!-- Estado Vacío -->
+                    <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 opacity-60">
+                        <div class="w-24 h-24 border-2 border-dashed border-gray-700 rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-ticket-alt text-4xl text-gray-700"></i>
+                        </div>
+                        <p class="text-sm font-bold uppercase tracking-widest">Billetera Vacía</p>
+                        <p class="text-xs mt-1">Compra tu primer Golden Ticket</p>
+                    </div>
+
+                    <!-- Los tickets se insertarán aquí como tarjetas -->
+                </div>
+
+                <!-- Footer Billetera -->
+                <div class="bg-black/60 p-4 border-t border-white/5 flex justify-between items-center backdrop-blur-md">
+                    <span class="text-xs text-gray-500"><i class="fas fa-shield-alt text-green-500 mr-1"></i> Códigos seguros</span>
+                    <button id="clearBtn" class="text-xs text-red-400 hover:text-red-300 underline">Limpiar Demo</button>
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Sorteo Digital (Sin Ruleta) -->
+  <div id="overlay" class="fixed inset-0 bg-black/95 z-[100] hidden items-center justify-center p-4 backdrop-blur-xl">
+    <div class="w-full max-w-3xl glass-card rounded-3xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 border border-yellow-500/20" id="modalContent">
+        <div class="bg-gradient-to-r from-gray-900 to-black p-6 flex justify-between items-center border-b border-white/10">
+            <h3 class="font-bold text-white tracking-widest uppercase text-sm"><i class="fas fa-server text-yellow-500 mr-2"></i> Sistema de Sorteo</h3>
+            <button id="closeModal" class="text-gray-400 hover:text-white transition"><i class="fas fa-times text-lg"></i></button>
+        </div>
+        
+        <div class="p-12 text-center" id="digitalDrawContainer">
+            <div class="mb-10 relative">
+                <div class="text-yellow-500/50 text-[10px] font-bold tracking-[0.4em] uppercase mb-6">Generador Aleatorio Cuántico</div>
+                
+                <!-- The Digital Display Box -->
+                <div class="w-full max-w-lg mx-auto bg-black border border-yellow-500/30 rounded-xl p-8 shadow-[inset_0_0_50px_rgba(0,0,0,1)] relative overflow-hidden group">
+                    <!-- Scanlines -->
+                    <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 pointer-events-none bg-[length:100%_4px,3px_100%] opacity-20"></div>
+                    
+                    <!-- Glow effect inside -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-yellow-500/5 blur-[50px] rounded-full"></div>
+
+                    <div class="text-5xl md:text-7xl font-mono font-black text-white tracking-widest relative z-20 h-24 flex items-center justify-center transition-all duration-100" id="digitalDisplay" style="text-shadow: 0 0 20px rgba(255,215,0,0.5);">
+                        READY
+                    </div>
+                </div>
+            </div>
+            
+            <button id="startDrawBtn" class="px-12 py-5 btn-gold rounded-full font-black text-lg shadow-[0_0_30px_rgba(255,215,0,0.3)] hover:scale-105 transition uppercase tracking-widest text-black flex items-center justify-center gap-3 mx-auto">
+                <i class="fas fa-play"></i> Iniciar Sorteo
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <canvas id="confetti" class="fixed inset-0 pointer-events-none z-[110]"></canvas>
+
+  <script>
+    // --- Configuración ---
+    const TICKET_PRICE = 5;
+    
+    // --- Estado ---
+    let qty = 0;
+    let tickets = [];
+    let isDrawing = false; // Changed from isSpinning
+
+    // --- DOM ---
+    const qtyInput = document.getElementById('qty');
+    const totalDisplay = document.getElementById('totalDisplay');
+    const buyBtn = document.getElementById('buyBtn');
+    const ticketsList = document.getElementById('ticketsList');
+    const emptyState = document.getElementById('emptyState');
+    const countBadge = document.getElementById('ticketsCountBadge');
+    const drawBtn = document.getElementById('drawBtn');
+    
+    // Modal & Digital Draw
+    const overlay = document.getElementById('overlay');
+    const modalContent = document.getElementById('modalContent');
+    const startDrawBtn = document.getElementById('startDrawBtn');
+    const digitalDisplay = document.getElementById('digitalDisplay');
+
+    function init() {
+        loadData();
+        startCountdown();
+        updateUI();
+        renderTickets();
+        window.addEventListener('resize', resizeConfetti);
+        resizeConfetti();
+    }
+    
+    function resizeConfetti() {
+        const c = document.getElementById('confetti');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+    }
+
+    function loadData() {
+        const saved = localStorage.getItem('camvia_tickets_v2');
+        if(saved) tickets = JSON.parse(saved);
+    }
+    function saveData() {
+        localStorage.setItem('camvia_tickets_v2', JSON.stringify(tickets));
+        updateUI();
+        renderTickets();
+    }
+
+    // --- Logic ---
+    function setQty(val) { qty = val; updateUI(); }
+    function addQty(val) { qty += val; if(qty > 100) qty = 100; updateUI(); }
+    
+    document.getElementById('plusBtn').addEventListener('click', () => { if(qty < 100) qty++; updateUI(); });
+    document.getElementById('minusBtn').addEventListener('click', () => { if(qty > 0) qty--; updateUI(); });
+
+    function updateUI() {
+        qtyInput.value = qty;
+        totalDisplay.innerText = `S/ ${(qty * TICKET_PRICE).toFixed(2)}`;
+        
+        if(qty > 0) {
+            totalDisplay.classList.add('text-white');
+            totalDisplay.classList.remove('text-gray-500');
+            buyBtn.disabled = false;
+        } else {
+            totalDisplay.classList.remove('text-white');
+            totalDisplay.classList.add('text-gray-500');
+            buyBtn.disabled = true;
+        }
+        
+        const activeTickets = tickets.filter(t => t.status === 'active');
+        drawBtn.disabled = activeTickets.length < 2;
+        countBadge.innerText = activeTickets.length;
+    }
+
+    // --- Compra ---
+    buyBtn.addEventListener('click', () => {
+        if(qty <= 0) return;
+        
+        buyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+        
+        setTimeout(() => {
+            for(let i=0; i<qty; i++) {
+                tickets.push({
+                    id: Date.now() + i,
+                    code: generateCode(),
+                    date: Date.now(),
+                    status: 'active'
+                });
+            }
+            saveData();
+            
+            qty = 0;
+            updateUI();
+            buyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
+            setTimeout(() => { 
+                buyBtn.innerHTML = '<span>REALIZAR PAGO</span><i class="fas fa-arrow-right"></i>'; 
+            }, 2000);
+            
+            fireConfetti(150);
+        }, 800);
+    });
+
+    function renderTickets() {
+        ticketsList.innerHTML = '';
+        if(tickets.length === 0) {
+            ticketsList.appendChild(emptyState);
+            return;
+        }
+
+        [...tickets].reverse().forEach(t => {
+            const div = document.createElement('div');
+            const isWinner = t.status === 'winner';
+            
+            div.className = `golden-ticket-item rounded-xl flex h-24 shadow-xl group select-none ${isWinner ? 'border-yellow-400 ring-2 ring-yellow-500/50' : ''}`;
+            
+            div.innerHTML = `
+                <div class="golden-ticket-texture"></div>
+                <div class="flex-grow p-4 flex flex-col justify-center relative pl-5 z-10 border-r border-yellow-700/20">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] ticket-text-engraved font-bold uppercase tracking-widest opacity-70">Golden Pass</span>
+                        ${isWinner ? '<span class="text-[9px] bg-black/80 text-white font-bold px-2 py-0.5 rounded-full shadow-lg">★ GANADOR ★</span>' : ''}
+                    </div>
+                    <div class="text-3xl ticket-code-font font-black ticket-text-engraved tracking-widest mt-1">${t.code}</div>
+                    <div class="text-[9px] ticket-text-engraved font-bold mt-2 opacity-60 flex items-center gap-1">
+                        <i class="fas fa-certificate text-[8px]"></i> AUTÉNTICO • ${new Date(t.date).toLocaleDateString()}
+                    </div>
+                </div>
+                <div class="ticket-stub w-20 flex flex-col items-center justify-center relative z-10">
+                    <div class="w-12 h-12 border-2 border-yellow-900/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-qrcode text-3xl text-yellow-900/60 mix-blend-multiply"></i>
+                    </div>
+                    <span class="text-[8px] ticket-text-engraved font-bold mt-1 tracking-wider opacity-50">#${t.id.toString().slice(-4)}</span>
+                </div>
+            `;
+            ticketsList.appendChild(div);
+        });
+    }
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+        if(confirm('¿Borrar tickets?')) {
+            tickets = [];
+            saveData();
+        }
+    });
+
+    function generateCode() {
+        const l = "ABCDEFGHJKLMNPQRSTUVWXYZ".charAt(Math.floor(Math.random() * 24));
+        const n = Math.floor(1000 + Math.random() * 9000);
+        return `GD-${n}${l}`;
+    }
+
+    function startCountdown() {
+        setInterval(() => {
+            const now = new Date();
+            const days = 2; 
+            const hours = 23 - now.getHours();
+            const mins = 59 - now.getMinutes();
+            const secs = 59 - now.getSeconds();
+            
+            if(document.getElementById('cDays')) document.getElementById('cDays').innerText = String(days).padStart(2,'0');
+            if(document.getElementById('cHours')) document.getElementById('cHours').innerText = String(hours).padStart(2,'0');
+            if(document.getElementById('cMins')) document.getElementById('cMins').innerText = String(mins).padStart(2,'0');
+            if(document.getElementById('cSecs')) document.getElementById('cSecs').innerText = String(secs).padStart(2,'0');
+        }, 1000);
+    }
+
+    // --- Digital Shuffle Draw ---
+    drawBtn.addEventListener('click', () => {
+        const active = tickets.filter(t => t.status === 'active');
+        if(active.length < 2) return;
+        
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        setTimeout(() => {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+        
+        digitalDisplay.innerText = "READY";
+        digitalDisplay.classList.remove('text-yellow-400', 'scale-125');
+        startDrawBtn.disabled = false;
+        startDrawBtn.classList.remove('opacity-50');
+        startDrawBtn.innerHTML = '<i class="fas fa-play"></i> Iniciar Sorteo';
+    });
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    function closeModal() {
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        }, 300);
+    }
+
+    startDrawBtn.addEventListener('click', () => {
+        if(isDrawing) return;
+        isDrawing = true;
+        startDrawBtn.disabled = true;
+        startDrawBtn.classList.add('opacity-50');
+        startDrawBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Sorteando...';
+
+        const activeTickets = tickets.filter(t => t.status === 'active');
+        // Seleccionar ganador
+        const winnerIndex = Math.floor(Math.random() * activeTickets.length);
+        const winner = activeTickets[winnerIndex];
+        
+        let steps = 0;
+        const maxSteps = 30; // Ciclos antes de parar
+        let speed = 50; // Velocidad inicial
+
+        function shuffleStep() {
+            // Mostrar codigo random visualmente
+            const randomCode = activeTickets[Math.floor(Math.random() * activeTickets.length)].code;
+            digitalDisplay.innerText = randomCode;
+            
+            steps++;
+
+            if(steps < maxSteps) {
+                // Aumentar delay para efecto "frenado"
+                if(steps > maxSteps - 10) speed += 30;
+                setTimeout(shuffleStep, speed);
+            } else {
+                // FINALIZAR
+                finalizeDraw(winner);
+            }
+        }
+        
+        shuffleStep();
+    });
+
+    function finalizeDraw(winner) {
+        digitalDisplay.innerText = winner.code;
+        digitalDisplay.classList.add('text-yellow-400', 'scale-125'); // Efecto Pop
+        
+        // Actualizar datos
+        const t = tickets.find(ticket => ticket.id === winner.id);
+        if(t) t.status = 'winner';
+        saveData();
+        
+        isDrawing = false;
+        startDrawBtn.innerHTML = '<i class="fas fa-check"></i> Sorteo Finalizado';
+        
+        fireConfetti(300);
+    }
+
+    // --- Confetti ---
+    function fireConfetti(count) {
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        const p = [];
+        const colors = ['#FFD700', '#FFFFFF', '#FDB931'];
+
+        for(let i=0; i<count; i++) {
+            p.push({
+                x: window.innerWidth/2, 
+                y: window.innerHeight/2,
+                vx: (Math.random()-0.5)*30,
+                vy: (Math.random()-1)*30,
+                s: Math.random()*6+3,
+                c: colors[Math.floor(Math.random()*colors.length)],
+                l: 100+Math.random()*80
+            });
+        }
+        function loop() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            let active = false;
+            p.forEach(pt => {
+                if(pt.l > 0) {
+                    pt.x += pt.vx; pt.y += pt.vy;
+                    pt.vy += 0.6; pt.vx *= 0.96; pt.l--;
+                    ctx.fillStyle = pt.c; ctx.fillRect(pt.x, pt.y, pt.s, pt.s);
+                    active = true;
+                }
+            });
+            if(active) requestAnimationFrame(loop);
+        }
+        loop();
+    }
+
+    init();
+  </script>
+</body>
+</html>

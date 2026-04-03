@@ -29,6 +29,7 @@ export interface Reward {
     top: number;
     name: string;
     url: string | null;
+    payments: string | null;
     icon: string;
     winnerId: number | null;
     ticketId: number | null;
